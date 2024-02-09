@@ -12,6 +12,8 @@ from torch_geometric.nn import models
 from torch_geometric.nn import GraphSAGE
 from torch_geometric.nn import aggr
 from torch_geometric.nn import MessagePassing
+from sklearn import preprocessing
+
 
 
 class SappyEncoderLayer(MessagePassing):
@@ -69,7 +71,7 @@ class SappyEncoderModule(torch.nn.Module):
         return x
 
 class SappyDecoderModule(torch.nn.Module):
-    def __init__(self, in_dim, layers=[10,10]):
+    def __init__(self, in_dim, layers=[30,30]):
         super(SappyDecoderModule, self).__init__()
         self.layers = layers
         self.conv = nn.ModuleList()
@@ -86,7 +88,7 @@ class SappyDecoderModule(torch.nn.Module):
 
 class GAE(object):
 
-    def __init__(self, adata, layers=[10,10], lr=0.00001, distance_threshold=None):
+    def __init__(self, adata, layers=[10,10], lr=0.00001, distance_threshold=None, exponent=2, distance_scale=None):
         self.lr = lr
         print("Generating PyTorch Geometric Dataset...")
         if distance_threshold != None:
@@ -102,9 +104,13 @@ class GAE(object):
         x = x.float()
         e = torch.from_numpy(numpy.array(edges)).type(torch.int64)
         attrs = [adata.obsp["spatial_distances"][x,y] for x,y in zip(*edges)]
+        if distance_scale!=None:
+            scaler = preprocessing.MinMaxScaler(feature_range=(0,distance_scale))
+            attrs = scaler.fit_transform(numpy.array(attrs).reshape(-1,1)).reshape(1,-1)
+            attrs = 1. / (numpy.array(attrs)**2)
+            attrs = attrs[0]
         data = Data(x=x, edge_index=e, edge_attr=attrs)
         self.adata = adata
-        data.edge_attr = 1 / numpy.array(data.edge_attr) #squared?
         data.edge_attr = torch.from_numpy(data.edge_attr)
         self.encoder_layers = layers
         self.decoder_layers = list(reversed(layers[1:])) + [data.num_features]
