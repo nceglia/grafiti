@@ -7,7 +7,7 @@ name = "sappy"
 version = "0.0.1"
 authors = [
   { name="Nicholas Ceglia", email="nickceglia@gmail.com" },
-  { name="Maryam Pourmaleki", email="mapourmaleki11@gmail.comm"},
+  { name="Maryam Pourmaleki", email="mapourmaleki11@gmail.com"},
 ]
 description = "Spatial Autoencoder Python Library"
 readme = "README.md"
