@@ -138,7 +138,7 @@ class GAE(object):
             self.optimizer.step() 
             self.losses.append(loss.item())
             if i % update_interval == 0:
-                print("Epoch {} ** iteration {} ** Loss: {}".format(self.global_epoch, i, numpy.mean(self.losses[-update_interval:])))
+                print("Epoch {} ** iteration {} ** Loss: {}".format(self.global_epoch, i, np.mean(self.losses[-update_interval:])))
             self.global_epoch += 1
             curr_loss = loss.item()
             if abs(curr_loss - prev_loss) < threshold:
