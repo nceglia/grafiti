@@ -1,5 +1,5 @@
 import scanpy as sc
-import numpy
+import numpy as np
 import seaborn as sns
 import umap
 import torch.nn.functional as F
@@ -102,13 +102,15 @@ class GAE(object):
         edges = adata.obsp["spatial_connectivities"].nonzero()
         x = torch.from_numpy(adata.X)
         x = x.float()
-        e = torch.from_numpy(numpy.array(edges)).type(torch.int64)
+        e = torch.from_numpy(np.array(edges)).type(torch.int64)
         attrs = [adata.obsp["spatial_distances"][x,y] for x,y in zip(*edges)]
         if distance_scale!=None:
             scaler = preprocessing.MinMaxScaler(feature_range=(0,distance_scale))
-            attrs = scaler.fit_transform(numpy.array(attrs).reshape(-1,1)).reshape(1,-1)
-            attrs = 1. / (numpy.array(attrs)**2)
+            attrs = scaler.fit_transform(np.array(attrs).reshape(-1,1)).reshape(1,-1)
+            attrs = 1. / (np.array(attrs)**2)
             attrs = attrs[0]
+        else:
+            attrs = np.array(attrs)
         data = Data(x=x, edge_index=e, edge_attr=attrs)
         self.adata = adata
         data.edge_attr = torch.from_numpy(data.edge_attr)
