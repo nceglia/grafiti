@@ -1,4 +1,4 @@
-# SAPPY
+# GRAFITI
 
 Python library for generating Spatially Aware Phenotypes
 
