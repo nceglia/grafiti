@@ -1,6 +1,6 @@
 # GRAFITI
 
-Python library for generating Spatially Aware Phenotypes
+Graph Autoencoder For Imaging and Transcriptomic Inference
 
 To install:
 ```
