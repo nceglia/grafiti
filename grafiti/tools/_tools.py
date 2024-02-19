@@ -7,7 +7,7 @@ import numpy as np
 import collections
 import pandas as pd
 
-sappy_colors = [
+grafiti_colors = [
     "#272822",  # Background
     "#F92672",  # Red
     "#FD971F",  # Orange
@@ -60,7 +60,7 @@ def shannon_entropy(G):
             H = H - p*math.log(p, 2)
     return H
 
-def sap_umap(adata, encoding_key="X_sappy",n_neighbors=20,max_iter=100, min_dist=0.5, metric="cosine"):
+def sap_umap(adata, encoding_key="X_grafiti",n_neighbors=20,max_iter=100, min_dist=0.5, metric="euclidean"):
     ldm = umap.UMAP(n_epochs=max_iter,
                     n_neighbors=n_neighbors,
                     min_dist=min_dist,
@@ -68,18 +68,18 @@ def sap_umap(adata, encoding_key="X_sappy",n_neighbors=20,max_iter=100, min_dist
     embd = ldm.fit_transform(adata.obsm[encoding_key])
     adata.obsm["X_umap"] = embd
 
-def sap_clusters(adata, resolution=0.5, cluster_key="sap", encoding_key="X_sappy",method="louvain"):
-    sc.pp.neighbors(adata,use_rep=encoding_key,key_added="sappy")
+def sap_clusters(adata, resolution=0.5, cluster_key="sap", encoding_key="X_grafiti",method="louvain"):
+    sc.pp.neighbors(adata,use_rep=encoding_key,key_added="grafiti")
     if method == "louvain":
-        sc.tl.louvain(adata,resolution=resolution,key_added=cluster_key,neighbors_key="sappy")
+        sc.tl.louvain(adata,resolution=resolution,key_added=cluster_key,neighbors_key="grafiti")
     elif method == "leiden":
-        sc.tl.leiden(adata,resolution=resolution,key_added=cluster_key,neighbors_key="sappy")
+        sc.tl.leiden(adata,resolution=resolution,key_added=cluster_key,neighbors_key="grafiti")
     else:
         raise ValueError("Method should be Louvain or Leiden.")
-    adata.obs[cluster_key] = ["SAP{}".format(x) for x in adata.obs[cluster_key].tolist()]
-    adata.uns["{}_colors".format(cluster_key)] = sappy_colors
+    adata.obs[cluster_key] = ["GrafitiMotif{}".format(x) for x in adata.obs[cluster_key].tolist()]
+    adata.uns["{}_colors".format(cluster_key)] = grafiti_colors
 
-def sap_tsne(adata, encoding_key="X_sappy"):
+def sap_tsne(adata, encoding_key="X_grafiti"):
     mani = TSNE(n_jobs=-1)
     adata.obsm["X_tsne"] = mani.fit_transform(adata.obsm[encoding_key])
 
@@ -115,7 +115,7 @@ def count_edges(adata):
         count_edges[n1][n2] += 1
         count_edges[n2][n1] += 1
     matrix = []
-    saps = list(set(adata.obs["sap"]))
+    saps = list(set(adata.obs["GrafitiMotif"]))
     for s1 in saps:
         row = []
         for s2 in saps:

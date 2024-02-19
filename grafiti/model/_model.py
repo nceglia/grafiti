@@ -16,9 +16,9 @@ from sklearn import preprocessing
 
 
 
-class SappyEncoderLayer(MessagePassing):
+class GrafitiEncoderLayer(MessagePassing):
     def __init__(self, in_channels, out_channels):
-        super(SappyEncoderLayer, self).__init__(aggr='add')
+        super(GrafitiEncoderLayer, self).__init__(aggr='add')
         self.lin = torch.nn.Linear(in_channels, out_channels)
 
     def message(self, x_j, edge_attr):
@@ -30,10 +30,10 @@ class SappyEncoderLayer(MessagePassing):
         ret = self.lin(ret) 
         return F.leaky_relu(ret, negative_slope=0.01)
     
-class SappyDecoderLayer(MessagePassing):
+class GrafitiDecoderLayer(MessagePassing):
 
     def __init__(self, in_channels, out_channels):
-        super(SappyDecoderLayer, self).__init__()
+        super(GrafitiDecoderLayer, self).__init__()
         self.lin = torch.nn.Linear(in_channels, out_channels)
 
     def message(self, x_j, edge_attr): 
@@ -54,15 +54,15 @@ class SappyDecoderLayer(MessagePassing):
         return F.leaky_relu(transformed_features, negative_slope=0.01)
     
 
-class SappyEncoderModule(torch.nn.Module):
+class GrafitiEncoderModule(torch.nn.Module):
     def __init__(self, in_dim, layers=[10,10]):
-        super(SappyEncoderModule, self).__init__()
+        super(GrafitiEncoderModule, self).__init__()
         self.layers = layers
         self.conv = nn.ModuleList()
         lhidden_dim = self.layers[0]
-        self.conv.append(SappyEncoderLayer(in_dim, lhidden_dim))
+        self.conv.append(GrafitiEncoderLayer(in_dim, lhidden_dim))
         for hidden_dim in self.layers[1:]:
-            self.conv.append(SappyEncoderLayer(lhidden_dim, hidden_dim))
+            self.conv.append(GrafitiEncoderLayer(lhidden_dim, hidden_dim))
             lhidden_dim = hidden_dim
 
     def forward(self, x, edge_index, edge_attr):
@@ -70,15 +70,15 @@ class SappyEncoderModule(torch.nn.Module):
             x = conv(x, edge_index=edge_index, edge_attr=edge_attr).relu()
         return x
 
-class SappyDecoderModule(torch.nn.Module):
+class GrafitiDecoderModule(torch.nn.Module):
     def __init__(self, in_dim, layers=[30,30]):
-        super(SappyDecoderModule, self).__init__()
+        super(GrafitiDecoderModule, self).__init__()
         self.layers = layers
         self.conv = nn.ModuleList()
         lhidden_dim = self.layers[0]
-        self.conv.append(SappyDecoderLayer(in_dim, lhidden_dim))
+        self.conv.append(GrafitiDecoderLayer(in_dim, lhidden_dim))
         for hidden_dim in self.layers[1:]:
-            self.conv.append(SappyDecoderLayer(lhidden_dim, hidden_dim))
+            self.conv.append(GrafitiDecoderLayer(lhidden_dim, hidden_dim))
             lhidden_dim = hidden_dim
 
     def forward(self, x, edge_index, edge_attr):
@@ -117,8 +117,8 @@ class GAE(object):
         self.encoder_layers = layers
         self.decoder_layers = list(reversed(layers[1:])) + [data.num_features]
         print("Setting up Model...")
-        self.encoder = SappyEncoderModule(data.num_features,layers=self.encoder_layers, )
-        self.decoder = SappyDecoderModule(layers[-1],layers=self.decoder_layers)
+        self.encoder = GrafitiEncoderModule(data.num_features,layers=self.encoder_layers, )
+        self.decoder = GrafitiDecoderModule(layers[-1],layers=self.decoder_layers)
         self.gae = models.GAE(encoder=self.encoder,decoder=self.decoder)
         self.optimizer = torch.optim.Adadelta(self.gae.parameters(), lr=lr)
         self.loss = nn.MSELoss()
@@ -163,7 +163,7 @@ class GAE(object):
         state_dict = torch.load(path)
         self.gae.load_state_dict(state_dict)
 
-    def load_embedding(self, adata, encoding_key="X_sappy"):
+    def load_embedding(self, adata, encoding_key="X_grafiti"):
         with torch.no_grad():
             z = self.gae.encode(self.data.x, self.data.edge_index, self.data.edge_attr)
             zcpu = z.detach().numpy()

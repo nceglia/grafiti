@@ -6,13 +6,13 @@ import matplotlib.patches as mpatches
 import matplotlib.colors as mcolors
 import seaborn as sns
 
-from ..tools._tools import get_fov_graph, sappy_colors
+from ..tools._tools import get_fov_graph, grafiti_colors
 
 
 def fovs(adata, cluster_key="sap", fov_key="sample_fov"):
     sq.pl.spatial_scatter(adata, color=cluster_key, shape=None, library_key=fov_key)
 
-def plot_fraction(adata,category,variable,save=None,color=sappy_colors):
+def plot_fraction(adata,category,variable,save=None,color=grafiti_colors):
     df = adata.obs
     count_df = df.groupby([category, variable]).size().unstack(fill_value=0)
     proportion_df = count_df.divide(count_df.sum(axis=1), axis=0)
@@ -24,14 +24,14 @@ def plot_fraction(adata,category,variable,save=None,color=sappy_colors):
     if save != None:
         plt.savefig(save)
 
-def sap_umap(adata,key="sap",save=None,add_outline=False,s=20):
+def sap_umap(adata,key="grafiti",save=None,add_outline=False,s=20):
     fig, ax = plt.subplots(1,1,figsize=(9,5))
     sc.pl.umap(adata,color=key,ax=ax,show=False,add_outline=add_outline,s=s)
     fig.tight_layout()
     if save != None:
         fig.savefig(save)
 
-def fov_umap(adata,key="sap", fov_key="sample_fov",save=None):
+def fov_umap(adata,key="grafiti", fov_key="sample_fov",save=None):
     fig, ax = plt.subplots(1,len(set(adata.obs[fov_key])),figsize=(4,12))
     for i in set(adata.obs[fov_key]):
         sub = adata[adata.obs[fov_key] == i]
@@ -41,24 +41,24 @@ def fov_umap(adata,key="sap", fov_key="sample_fov",save=None):
     if save != None:
         fig.savefig(save)
 
-def sap_tsne(adata,key="sap",save=None, add_outline=True, s=20):
+def sap_tsne(adata,key="grafiti",save=None, add_outline=True, s=20):
     fig, ax = plt.subplots(1,1,figsize=(9,5))
     sc.pl.embedding(adata,basis="tsne",color=key,ax=ax,show=False,add_outline=add_outline,s=s)
     fig.tight_layout()
     if save != None:
         fig.savefig(save)
 
-def plot_fov_graph(adata, fov_id, use_coords=True, cluster_key="sap", spatial_key="spatial", fov_key="sample_fov", title="", figsize=(6,6)):
+def plot_fov_graph(adata, fov_id, use_coords=True, cluster_key="grafiti", spatial_key="spatial", fov_key="sample_fov", title="", figsize=(6,6)):
     sub = adata[adata.obs[fov_key]==fov_id]
     sap_order = []
     order_to_sap = dict()
     for x in set(adata.obs[cluster_key]):
-        i = int(x.replace("SAP",""))
+        i = int(x.replace("GrafitiMotif",""))
         sap_order.append(i)
         order_to_sap[i] = x
     sap_order = list(sorted(sap_order))
     sap_sorted = [order_to_sap[i] for i in sap_order]
-    cmap = dict(zip(sap_sorted,sappy_colors))
+    cmap = dict(zip(sap_sorted,grafiti_colors))
     for x in list(cmap.keys()):
         if x not in sub.obs[cluster_key].tolist():
             del cmap[x]
@@ -80,23 +80,23 @@ def plot_fov_graph(adata, fov_id, use_coords=True, cluster_key="sap", spatial_ke
     fig.legend(handles=handles, loc='upper right')
     fig.tight_layout()
 
-def sap_by_feature(adata,feature,fov_id,fov_key="sample_fov",coord_key="spatial",sap_key="sap",figsize=(18,4),s=30,add_outline=False,color="celltype",ct_color=sappy_colors):
+def sap_by_feature(adata,feature,fov_id,fov_key="sample_fov",coord_key="spatial",sap_key="grafiti",figsize=(18,4),s=30,add_outline=False,color="celltype",ct_color=grafiti_colors):
     adata = adata[adata.obs[fov_key] == fov_id]
 
     sap_order = []
     order_to_sap = dict()
-    for x in set(adata.obs["sap"]):
-        i = int(x.replace("SAP",""))
+    for x in set(adata.obs["grafiti"]):
+        i = int(x.replace("GrafitiMotif",""))
         sap_order.append(i)
         order_to_sap[i] = x
     sap_order = list(sorted(sap_order))
     sap_sorted = [order_to_sap[i] for i in sap_order]
-    cmap = dict(zip(sap_sorted,sappy_colors))
+    cmap = dict(zip(sap_sorted,grafiti_colors))
     
     fig, ax = plt.subplots(1,4,figsize=figsize)
     sc.pl.embedding(adata,basis=coord_key,color=[feature],title=[feature],s=s, add_outline=add_outline,ax=ax[0],show=False)
-    sc.pl.embedding(adata,basis=coord_key,color="sap",title=["SAP"],s=s, add_outline=add_outline,ax=ax[2],show=False,palette=cmap)
-    sc.pl.embedding(adata,basis=coord_key,color=color,title=["SAP"],s=s, add_outline=add_outline,ax=ax[3],show=False,palette=ct_color)
+    sc.pl.embedding(adata,basis=coord_key,color="grafiti",title=["Grafiti Spatial Motifs"],s=s, add_outline=add_outline,ax=ax[2],show=False,palette=cmap)
+    sc.pl.embedding(adata,basis=coord_key,color=color,title=["Grafiti Spatial Motifs"],s=s, add_outline=add_outline,ax=ax[3],show=False,palette=ct_color)
     if feature in adata.var.index.tolist():
         f = adata.X[:,adata.var.index.tolist().index(feature)].tolist()
     elif feature in adata.obs.columns:

@@ -1,8 +1,8 @@
 from setuptools import setup, find_packages
 
 setup(
-    name='sappy',
+    name='grafiti',
     version='0.0.1',
-    description='Spatially Aware Phenotyping Python Package',
-    packages=find_packages(include=['sappy','sappy.model','sappy.tools','sappy.plotting','sappy.datasets']),
+    description='Graph Autoencoder For Imaging and Transcriptomic Inference',
+    packages=find_packages(include=['grafiti','grafiti.model','grafiti.tools','grafiti.plotting','grafiti.datasets']),
 )
