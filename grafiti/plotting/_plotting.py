@@ -12,11 +12,11 @@ from ..tools._tools import get_fov_graph, grafiti_colors
 def fovs(adata, cluster_key="sap", fov_key="sample_fov"):
     sq.pl.spatial_scatter(adata, color=cluster_key, shape=None, library_key=fov_key)
 
-def plot_fraction(adata,category,variable,save=None,color=grafiti_colors):
+def plot_fraction(adata,category,variable,save=None,color=grafiti_colors, figsize=(10,6)):
     df = adata.obs
     count_df = df.groupby([category, variable]).size().unstack(fill_value=0)
     proportion_df = count_df.divide(count_df.sum(axis=1), axis=0)
-    proportion_df.plot(kind="bar", stacked=True, figsize=(10,6),color=color)
+    proportion_df.plot(kind="bar", stacked=True, figsize=figsize,color=color)
     plt.ylabel("Fraction")
     plt.ylim([0, 1])
     plt.legend(title=variable, loc="upper left", bbox_to_anchor=(1, 1))
@@ -79,6 +79,21 @@ def plot_fov_graph(adata, fov_id, use_coords=True, cluster_key="grafiti", spatia
     ax.set_title(title)
     fig.legend(handles=handles, loc='upper right')
     fig.tight_layout()
+
+def set_colors(adata, columns, color_list=None):
+    i = 0
+    main_color_map = dict()
+    adata = adata.copy()
+    if color_list == None:
+        colors = grafiti_colors.copy() + grafiti_colors.copy() + grafiti_colors.copy()
+    for x in columns:
+        ct = []
+        for i, val in enumerate(set(adata.obs[x].tolist())):
+            c = colors.pop(i)
+            ct.append(c)
+            main_color_map[val] = c
+        adata.uns["{}_colors".format(x)] = ct
+    return adata
 
 def sap_by_feature(adata,feature,fov_id,fov_key="sample_fov",coord_key="spatial",sap_key="grafiti",figsize=(18,4),s=30,add_outline=False,color="celltype",ct_color=grafiti_colors):
     adata = adata[adata.obs[fov_key] == fov_id]
