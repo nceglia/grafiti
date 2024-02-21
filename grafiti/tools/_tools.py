@@ -1,4 +1,4 @@
-import umap
+import umap as umap_ext
 import scanpy as sc
 from sklearn.manifold import TSNE
 import networkx as nx
@@ -6,6 +6,9 @@ import math
 import numpy as np
 import collections
 import pandas as pd
+from sklearn.mixture import GaussianMixture
+from sklearn.metrics import davies_bouldin_score
+import seaborn as sns
 
 grafiti_colors = [
     "#272822",  # Background
@@ -60,28 +63,31 @@ def shannon_entropy(G):
             H = H - p*math.log(p, 2)
     return H
 
-def sap_umap(adata, encoding_key="X_grafiti",n_neighbors=20,max_iter=100, min_dist=0.5, metric="euclidean"):
-    ldm = umap.UMAP(n_epochs=max_iter,
-                    n_neighbors=n_neighbors,
-                    min_dist=min_dist,
-                    metric=metric)
-    embd = ldm.fit_transform(adata.obsm[encoding_key])
-    adata.obsm["X_umap"] = embd
+def umap(adata, encoding_key="X_grafiti",n_neighbors=20,max_iter=100, min_dist=0.5, metric="euclidean", scanpy=False, neighbors_key="grafiti_neighbors",):
+    if not scanpy:
+        ldm = umap_ext.UMAP(n_epochs=max_iter,
+                        n_neighbors=n_neighbors,
+                        min_dist=min_dist,
+                        metric=metric)
+        embd = ldm.fit_transform(adata.obsm[encoding_key])
+        adata.obsm["X_umap"] = embd
+    else:
+        sc.tl.umap(adata,neighbors_key=neighbors_key)
+    
 
-def sap_clusters(adata, resolution=0.5, cluster_key="sap", encoding_key="X_grafiti",method="louvain"):
-    sc.pp.neighbors(adata,use_rep=encoding_key,key_added="grafiti")
+def find_motifs(adata, resolution=0.5, cluster_key="grafiti_motif", neighbor_method="umap", n_neighbors=50, prefix="GrafitiMotif", encoding_key="X_grafiti",method="louvain",metric="euclidean",k=10,max_iter=10,use_weights=False, compute_neighbors=True):
+    if compute_neighbors:
+        sc.pp.neighbors(adata,use_rep=encoding_key,key_added="grafiti_neighbors", n_neighbors=n_neighbors, method=neighbor_method, metric=metric)
     if method == "louvain":
-        sc.tl.louvain(adata,resolution=resolution,key_added=cluster_key,neighbors_key="grafiti")
+        sc.tl.louvain(adata,resolution=resolution,key_added=cluster_key,neighbors_key="grafiti_neighbors",use_weights=use_weights)
     elif method == "leiden":
-        sc.tl.leiden(adata,resolution=resolution,key_added=cluster_key,neighbors_key="grafiti")
+        sc.tl.leiden(adata,resolution=resolution,key_added=cluster_key,neighbors_key="grafiti_neighbors",use_weights=use_weights)
+    elif method == "gm":
+        gm = GaussianMixture(n_components=k, random_state=0, max_iter=max_iter).fit(adata.obsm[encoding_key])
+        adata.obs[cluster_key] = ["{}{}".format(prefix,x) for x in gm.predict(adata.obsm[encoding_key]).tolist()]
     else:
         raise ValueError("Method should be Louvain or Leiden.")
-    adata.obs[cluster_key] = ["GrafitiMotif{}".format(x) for x in adata.obs[cluster_key].tolist()]
-    adata.uns["{}_colors".format(cluster_key)] = grafiti_colors
-
-def sap_tsne(adata, encoding_key="X_grafiti"):
-    mani = TSNE(n_jobs=-1)
-    adata.obsm["X_tsne"] = mani.fit_transform(adata.obsm[encoding_key])
+    adata.obs[cluster_key] = ["{}{}".format(prefix,x) for x in adata.obs[cluster_key].tolist()]
 
 def get_fov_graph(adata, fov_id, fov_key="sample_fov"):
     sub = adata[adata.obs[fov_key]==fov_id]
@@ -123,3 +129,19 @@ def count_edges(adata):
         matrix.append(row)
     data = pd.DataFrame(data=np.array(matrix),index= saps,columns=saps)
     return data
+
+def find_optimal_clustering(adata, low_res, high_res, number_of_points, metric="dbi",encoding_key='X_grafiti',plot=True):
+    resolutions = np.linspace(low_res, high_res, number_of_points)
+    dbis = []
+    keys = []
+    for i in resolutions:
+        cluster_key = "GrafitiMotif_{}".format(i)
+        gf.tl.find_motifs(adata, resolution=i, cluster_key=cluster_key, compute_neighbors=False)
+        keys.append(cluster_key)
+        dbi = davies_bouldin_score(adata.obsm[encoding_key], adata.obs[cluster_key])
+        dbis.append(dbi)
+    df = pd.DataFrame.from_dict({"Resolution":resolutions,"DBI":dbis})
+    if plot:
+        sns.plot(data=df,x="Resolution",y="DBI")
+    best_result = resolutions[np.argmin(dbis)]
+    return best_result

@@ -14,8 +14,6 @@ from torch_geometric.nn import aggr
 from torch_geometric.nn import MessagePassing
 from sklearn import preprocessing
 
-
-
 class GrafitiEncoderLayer(MessagePassing):
     def __init__(self, in_channels, out_channels):
         super(GrafitiEncoderLayer, self).__init__(aggr='add')
