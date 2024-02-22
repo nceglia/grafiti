@@ -98,13 +98,13 @@ class GAE(object):
         for f in tqdm.tqdm(fovs):
             fdata = adata[adata.obs[fov_key] == f].copy()
             if distance_threshold != None:
-                distances = adata.obsp["spatial_distances"]
-                connectiv = adata.obsp["spatial_connectivities"]
+                distances = fdata.obsp["spatial_distances"]
+                connectiv = fdata.obsp["spatial_connectivities"]
                 rows, cols = distances.nonzero()
                 for row, col in zip(rows, cols):
                     if distances[row, col] > distance_threshold:
                         connectiv[row, col] = 0
-                adata.obsp["spatial_connectivities"] = connectiv
+                fdata.obsp["spatial_connectivities"] = connectiv
             edges = fdata.obsp["spatial_connectivities"].nonzero()
             x = torch.from_numpy(fdata.X)
             x = x.float()
