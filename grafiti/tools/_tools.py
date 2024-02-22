@@ -63,7 +63,7 @@ def shannon_entropy(G):
             H = H - p*math.log(p, 2)
     return H
 
-def umap(adata, encoding_key="X_grafiti",n_neighbors=20,max_iter=100, min_dist=0.5, metric="euclidean", scanpy=False, neighbors_key="grafiti_neighbors",):
+def umap(adata, encoding_key="X_grafiti",n_neighbors=20,max_iter=100, min_dist=0.5, metric="euclidean", scanpy=False, neighbors_key="grafiti_neighbors"):
     if not scanpy:
         ldm = umap_ext.UMAP(n_epochs=max_iter,
                         n_neighbors=n_neighbors,
