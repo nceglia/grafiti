@@ -91,19 +91,20 @@ class GAE(object):
     def __init__(self, adata, layers=[10,10], lr=0.00001, distance_threshold=None, exponent=2, distance_scale=None, fov_key=False):
         self.lr = lr
         print("Generating PyTorch Geometric Dataset...")
-        if distance_threshold != None:
-            distances = adata.obsp["spatial_distances"]
-            connectiv = adata.obsp["spatial_connectivities"]
-            rows, cols = distances.nonzero()
-            for row, col in zip(rows, cols):
-                if distances[row, col] > distance_threshold:
-                    connectiv[row, col] = 0
-            adata.obsp["spatial_connectivities"] = connectiv
+
         fovs = list(set(adata.obs[fov_key]))
         datas = []
         print("Building batches...")
         for f in tqdm.tqdm(fovs):
             fdata = adata[adata.obs[fov_key] == f].copy()
+            if distance_threshold != None:
+                distances = adata.obsp["spatial_distances"]
+                connectiv = adata.obsp["spatial_connectivities"]
+                rows, cols = distances.nonzero()
+                for row, col in zip(rows, cols):
+                    if distances[row, col] > distance_threshold:
+                        connectiv[row, col] = 0
+                adata.obsp["spatial_connectivities"] = connectiv
             edges = fdata.obsp["spatial_connectivities"].nonzero()
             x = torch.from_numpy(fdata.X)
             x = x.float()
@@ -187,6 +188,10 @@ class GAE(object):
 
     def load_embedding(self, adata, encoding_key="X_grafiti"):
         with torch.no_grad():
-            z = self.gae.encode(self.data.x, self.data.edge_index, self.data.edge_attr)
-            zcpu = z.detach().numpy()
-            adata.obsm[encoding_key] = zcpu
+            zcpus = []
+            for d in self.data:
+                z = self.gae.encode(d.x, d.edge_index, d.edge_attr)
+                zcpu = z.detach().numpy()
+                zcpus.append(zcpu.T)
+            zcpu = np.hstack(zcpus)
+            adata.obsm[encoding_key] = zcpu.T
