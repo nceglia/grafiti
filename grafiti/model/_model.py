@@ -170,8 +170,6 @@ class GAE(object):
         print("Training Complete.")
 
     def __str__(self):
-        fmt = "Pytorch Dataset\n\n"
-        fmt += str(self.data) + "\n\n"
         fmt += "GAE Architecture\n\n"
         fmt += str(self.gae) + "\n"
         return fmt

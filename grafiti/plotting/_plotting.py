@@ -63,7 +63,9 @@ def plot_fov_graph(adata, fov_id, use_coords=True, cluster_key="grafiti", spatia
     fig.legend(handles=handles, loc='upper right')
     fig.tight_layout()
 
-def fov(adata,):
+def fov(adata,fov):
+    adata.obs["X"] = adata.obsm["spatial"].T[0]
+    adata.obs["Y"] = adata.obsm["spatial"].T[1]
     sc.pl.embedding(adata,basis="spatial",color="grafiti",s=100, alpha=0.5)
 
 def set_colors(adata, columns, color_list=None):
