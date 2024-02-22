@@ -3,7 +3,7 @@ requires = ["setuptools>=61.0"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "sappy"
+name = "grafiti"
 version = "0.0.1"
 authors = [
   { name="Nicholas Ceglia", email="nickceglia@gmail.com" },
@@ -22,4 +22,4 @@ dynamic = ["dependencies"]
 dependencies = {file = ["requirements.txt"]}
 
 [project.urls]
-"Homepage" = "https://github.com/nceglia/sappy"
+"Homepage" = "https://github.com/nceglia/grafiti"

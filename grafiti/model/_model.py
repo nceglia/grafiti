@@ -13,6 +13,8 @@ from torch_geometric.nn import GraphSAGE
 from torch_geometric.nn import aggr
 from torch_geometric.nn import MessagePassing
 from sklearn import preprocessing
+from torch_geometric.loader import DataLoader
+import tqdm
 
 class GrafitiEncoderLayer(MessagePassing):
     def __init__(self, in_channels, out_channels):
@@ -86,7 +88,7 @@ class GrafitiDecoderModule(torch.nn.Module):
 
 class GAE(object):
 
-    def __init__(self, adata, layers=[10,10], lr=0.00001, distance_threshold=None, exponent=2, distance_scale=None):
+    def __init__(self, adata, layers=[10,10], lr=0.00001, distance_threshold=None, exponent=2, distance_scale=None, fov_key=False):
         self.lr = lr
         print("Generating PyTorch Geometric Dataset...")
         if distance_threshold != None:
@@ -97,21 +99,27 @@ class GAE(object):
                 if distances[row, col] > distance_threshold:
                     connectiv[row, col] = 0
             adata.obsp["spatial_connectivities"] = connectiv
-        edges = adata.obsp["spatial_connectivities"].nonzero()
-        x = torch.from_numpy(adata.X)
-        x = x.float()
-        e = torch.from_numpy(np.array(edges)).type(torch.int64)
-        attrs = [adata.obsp["spatial_distances"][x,y] for x,y in zip(*edges)]
-        if distance_scale!=None:
-            scaler = preprocessing.MinMaxScaler(feature_range=(0,distance_scale))
-            attrs = scaler.fit_transform(np.array(attrs).reshape(-1,1)).reshape(1,-1)
-            attrs = 1. / (np.array(attrs)**2)
-            attrs = attrs[0]
-        else:
-            attrs = np.array(attrs)
-        data = Data(x=x, edge_index=e, edge_attr=attrs)
+        fovs = list(set(adata.obs[fov_key]))
+        datas = []
+        print("Building batches...")
+        for f in tqdm.tqdm(fovs):
+            fdata = adata[adata.obs[fov_key] == f].copy()
+            edges = fdata.obsp["spatial_connectivities"].nonzero()
+            x = torch.from_numpy(fdata.X)
+            x = x.float()
+            e = torch.from_numpy(np.array(edges)).type(torch.int64)
+            attrs = [fdata.obsp["spatial_distances"][x,y] for x,y in zip(*edges)]
+            if distance_scale!=None:
+                scaler = preprocessing.MinMaxScaler(feature_range=(0,distance_scale))
+                attrs = scaler.fit_transform(np.array(attrs).reshape(-1,1)).reshape(1,-1)
+                attrs = 1. / (np.array(attrs)**exponent)
+                attrs = attrs[0]
+            else:
+                attrs = np.array(attrs)
+            data = Data(x=x, edge_index=e, edge_attr=attrs)
+            data.edge_attr = torch.from_numpy(data.edge_attr)
+            datas.append(data)
         self.adata = adata
-        data.edge_attr = torch.from_numpy(data.edge_attr)
         self.encoder_layers = layers
         self.decoder_layers = list(reversed(layers[1:])) + [data.num_features]
         print("Setting up Model...")
@@ -122,27 +130,43 @@ class GAE(object):
         self.loss = nn.MSELoss()
         self.losses = []
         self.global_epoch = 0
-        self.data = data
+        self.data = datas
         print("Ready to train!")
 
-    def train(self, epochs, update_interval=5, threshold=0):
+    def create_data_loader(self, batch_size=32):
+        # Assuming self.data is a list of Data objects
+        return DataLoader(self.data, batch_size=batch_size, shuffle=True)
+
+    def train(self, epochs, update_interval=5, threshold=0, batch_size=None):
+        if batch_size == None:
+            batch_size = len(self.data)
+        data_loader = self.create_data_loader(batch_size)
         prev_loss = 0.
-        for i in range(epochs):
-            self.optimizer.zero_grad()  
-            z = self.gae.encode(self.data.x, self.data.edge_index, self.data.edge_attr)
-            reconstruction = self.gae.decode(z, self.data.edge_index, self.data.edge_attr)
-            loss = self.loss(reconstruction, self.data.x)
-            loss.backward()
-            self.optimizer.step() 
-            self.losses.append(loss.item())
-            if i % update_interval == 0:
-                print("Epoch {} ** iteration {} ** Loss: {}".format(self.global_epoch, i, np.mean(self.losses[-update_interval:])))
-            self.global_epoch += 1
-            curr_loss = loss.item()
-            if abs(curr_loss - prev_loss) < threshold:
-                print("Minimum threhsold!")
+
+        for epoch in range(epochs):
+            total_loss = 0
+            for batch in data_loader:
+                self.optimizer.zero_grad()
+                z = self.gae.encode(batch.x, batch.edge_index, batch.edge_attr)
+                reconstruction = self.gae.decode(z, batch.edge_index, batch.edge_attr)
+                loss = self.loss(reconstruction, batch.x)
+                loss.backward()
+                self.optimizer.step()
+                total_loss += loss.item()
+
+            avg_loss = total_loss / len(data_loader)
+            self.losses.append(avg_loss)
+
+            if epoch % update_interval == 0:
+                print(f"Epoch {epoch} Loss: {avg_loss}")
+
+            if abs(avg_loss - prev_loss) < threshold:
+                print("Minimum threshold reached!")
                 break
-        print("Complete.")
+
+            prev_loss = avg_loss
+
+        print("Training Complete.")
 
     def __str__(self):
         fmt = "Pytorch Dataset\n\n"
