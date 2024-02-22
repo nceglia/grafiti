@@ -24,22 +24,12 @@ def plot_fraction(adata,category,variable,save=None,color=grafiti_colors, figsiz
     if save != None:
         plt.savefig(save)
 
-def umap(adata,key="grafiti",save=None,add_outline=False,s=20):
-    fig, ax = plt.subplots(1,1,figsize=(9,5))
+def umap(adata, key="grafiti", save=None, add_outline=False, s=20, figsize=(9,6)):
+    fig, ax = plt.subplots(1,1,figsize=figsize)
     sc.pl.umap(adata,color=key,ax=ax,show=False,add_outline=add_outline,s=s)
     fig.tight_layout()
     if save != None:
         fig.savefig(save)
-
-# def umap(adata,key="grafiti", fov_key="sample_fov",save=None):
-#     fig, ax = plt.subplots(1,len(set(adata.obs[fov_key])),figsize=(4,12))
-#     for i in set(adata.obs[fov_key]):
-#         sub = adata[adata.obs[fov_key] == i]
-#         sc.pl.umap(adata,alpha=0.7, show=False,ax=ax)
-#         sc.pl.umap(sub,color=key,ax=ax,show=False)
-#     fig.tight_layout()
-#     if save != None:
-#         fig.savefig(save)
 
 def plot_fov_graph(adata, fov_id, use_coords=True, cluster_key="grafiti", spatial_key="spatial", fov_key="sample_fov", title="", figsize=(6,6)):
     sub = adata[adata.obs[fov_key]==fov_id]
@@ -72,6 +62,9 @@ def plot_fov_graph(adata, fov_id, use_coords=True, cluster_key="grafiti", spatia
     ax.set_title(title)
     fig.legend(handles=handles, loc='upper right')
     fig.tight_layout()
+
+def fov(adata,):
+    sc.pl.embedding(adata,basis="spatial",color="grafiti",s=100, alpha=0.5)
 
 def set_colors(adata, columns, color_list=None):
     i = 0
