@@ -170,6 +170,7 @@ class GAE(object):
         print("Training Complete.")
 
     def __str__(self):
+        fmt = ""
         fmt += "GAE Architecture\n\n"
         fmt += str(self.gae) + "\n"
         return fmt
