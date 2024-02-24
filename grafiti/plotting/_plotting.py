@@ -101,7 +101,7 @@ def plot_fov_graph(adata, fov_id, use_coords=True, n_cols=4, s=10, save=None, cl
                     axcur = ax[cur_row][cur_col]
             else:
                 axcur = ax
-            G = get_fov_graph(sub, fov_id[cur_id])
+            G = get_fov_graph(sub, fov_id[cur_id], fov_key=fov_key)
             node_colors = []
             for n in subx.obs[cluster_key]:
                 node_colors.append(cmap[n])
