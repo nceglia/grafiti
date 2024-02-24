@@ -11,36 +11,36 @@ from sklearn.metrics import davies_bouldin_score
 import seaborn as sns
 
 grafiti_colors = [
-    "#272822",  # Background
-    "#F92672",  # Red
-    "#FD971F",  # Orange
-    "#E6DB74",  # Yellow
-    "#A6E22E",  # Green
-    "#66D9EF",  # Blue
-    "#AE81FF",  # Purple
-    "#75715E",  # Brown
-    "#F92659",  # Pink
-    "#D65F0E",  # Abricos
-    "#1E1E1E",   # Black
-    "#004d47",  # Darker Teal
-    "#D291BC",  # Soft Pink
-    "#3A506B",  # Dark Slate Blue
-    "#5D8A5E",  # Sage Green
-    "#A6A1E2",  # Dull Lavender
-    "#E97451",  # Burnt Sienna
-    "#6C8D67",  # Muted Lime Green
-    "#832232",  # Dim Maroon
-    "#669999",  # Desaturated Cyan
-    "#C08497",  # Dusty Rose
-    "#587B7F",  # Ocean Blue
-    "#9A8C98",  # Muted Purple
-    "#F28E7F",  # Salmon
-    "#F3B61F",  # Goldenrod
-    "#6A6E75",  # Iron Gray
-    "#FFD8B1",  # Light Peach
-    "#88AB75",  # Moss Green
-    "#C38D94",  # Muted Rose
-    "#6D6A75",  # Purple Gray
+    "#ff0000",  # Bright Red
+    "#00ff00",  # Bright Green
+    "#0000ff",  # Bright Blue
+    "#ffff00",  # Bright Yellow
+    "#ff00ff",  # Bright Pink
+    "#00ffff",  # Bright Cyan
+    "#ff6600",  # Bright Orange
+    "#9900ff",  # Bright Purple
+    "#00ff99",  # Bright Aqua
+    "#ff3399",  # Hot Pink
+    "#3366ff",  # Sky Blue
+    "#33cc33",  # Lime Green
+    "#cc33ff",  # Neon Purple
+    "#ffcc00",  # Golden Yellow
+    "#ff99cc",  # Pastel Pink
+    "#66ffcc",  # Turquoise
+    "#cc9966",  # Bronze
+    "#9999ff",  # Lavender
+    "#ccff66",  # Neon Green
+    "#ff6666",  # Salmon Red
+    "#66ccff",  # Light Blue
+    "#ccffcc",  # Mint Green
+    "#ffccff",  # Pale Pink
+    "#ccccff",  # Periwinkle
+    "#ff9966",  # Coral
+    "#66cccc",  # Aqua Green
+    "#ff6666",  # Soft Red
+    "#cc6699",  # Mauve
+    "#9966cc",  # Indigo
+    "#669966",  # Olive Green
 ]
 
 def degree_distribution(G):
@@ -88,6 +88,7 @@ def find_motifs(adata, resolution=0.5, cluster_key="grafiti_motif", neighbor_met
     else:
         raise ValueError("Method should be Louvain or Leiden.")
     adata.obs[cluster_key] = ["{}{}".format(prefix,x) for x in adata.obs[cluster_key].tolist()]
+
 
 def get_fov_graph(adata, fov_id, fov_key="sample_fov"):
     sub = adata[adata.obs[fov_key]==fov_id]
