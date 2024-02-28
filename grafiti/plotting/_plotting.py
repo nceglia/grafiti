@@ -6,6 +6,11 @@ import matplotlib.patches as mpatches
 import matplotlib.colors as mcolors
 import seaborn as sns
 import matplotlib
+import pandas as pd
+import numpy as np
+from statannotations.Annotator import Annotator
+import itertools
+from scipy import sparse
 
 from ..tools._tools import get_fov_graph
 
@@ -164,3 +169,46 @@ def motif_by_feature(adata,feature,fov_id,fov_key="sample_fov",coord_key="spatia
     df[feature] = f
     sns.boxplot(data=df,x=sap_key,y=feature,ax=ax[1],palette=cmap)
     fig.tight_layout()
+
+def boxplot(adata, groupby, variable, splitby, summarizeby, split_order=None, order=None, figsize=(7,5), bbox=(1.03, 1), dpi=300, save=None):
+    def get_expression(gene):
+        if type(adata.X) != sparse.csr_matrix:
+            adata.X = sparse.csr_matrix(adata.X)
+        return adata.X[:,adata.var.index.tolist().index(gene)].T.todense().tolist()[0]
+    df = adata.obs
+    if variable not in df.columns:
+        df[variable] = get_expression(variable)
+    splts = []
+    grps = []
+    summarize = []
+    values = []
+    for grp in set(adata.obs[groupby]):
+        gdf = df[df[groupby] == grp]
+        for s in set(gdf[splitby]):
+            sdf = gdf[gdf[splitby] == s]
+            for smz in set(sdf[summarizeby]):
+                smzdata = sdf[sdf[summarizeby] == smz]
+                summarize.append(smz)
+                grps.append(grp)
+                splts.append(s)
+                values.append(np.mean(smzdata[variable]))
+    df = pd.DataFrame.from_dict({summarizeby:summarize,groupby:grps,splitby:splts,variable:values})
+    if split_order == None:
+        split_order = list(set(df[splitby]))
+    if order == None:
+        order = list(set(df[groupby])) 
+    split_combos = list(itertools.combinations(split_order,2))
+    pairs = []
+    for o in order:
+        for c in split_combos:
+            pairs.append([(o,c[0]),(o,c[1])])
+    fig,ax = plt.subplots(1,1,figsize=figsize)
+    sns.boxplot(data=df,x=groupby, y=variable, hue=splitby, ax=ax, order=order, hue_order=split_order)
+    annot = Annotator(ax, pairs, data=df, x=groupby, y=variable, order=order, hue=splitby, hue_order=split_order)
+    annot.configure(test='Mann-Whitney', verbose=2)
+    annot.apply_test()
+    annot.annotate()
+    fig.legend(loc='upper left', bbox_to_anchor=bbox)
+    plt.xticks(rotation=90)
+    if save != None:
+        fig.savefig(save, dpi=dpi, bbox_inches='tight')
