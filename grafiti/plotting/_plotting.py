@@ -170,7 +170,7 @@ def motif_by_feature(adata,feature,fov_id,fov_key="sample_fov",coord_key="spatia
     sns.boxplot(data=df,x=sap_key,y=feature,ax=ax[1],palette=cmap)
     fig.tight_layout()
 
-def boxplot(adata, groupby, variable, splitby, summarizeby, split_order=None, order=None, swarm=True, point_outline=1, alpha=0.9,point_size=6, figsize=(7,5), bbox=(1.03, 1), dpi=300, save=None):
+def boxplot(adata, groupby, variable, splitby, summarizeby, box=True, split_order=None, order=None, swarm=True, point_outline=1, alpha=0.9,point_size=6, figsize=(7,5), bbox=(1.03, 1), dpi=300, save=None):
     def get_expression(gene):
         if type(adata.X) != sparse.csr_matrix:
             adata.X = sparse.csr_matrix(adata.X)
@@ -203,7 +203,10 @@ def boxplot(adata, groupby, variable, splitby, summarizeby, split_order=None, or
         for c in split_combos:
             pairs.append([(o,c[0]),(o,c[1])])
     fig,ax = plt.subplots(1,1,figsize=figsize)
-    sns.boxplot(data=df,x=groupby, y=variable, hue=splitby, ax=ax, order=order, hue_order=split_order)
+    if not box:
+        sns.violinplot(data=df,x=groupby, y=variable, hue=splitby, ax=ax, order=order, hue_order=split_order)
+    else:
+        sns.boxplot(data=df,x=groupby, y=variable, hue=splitby, ax=ax, order=order, hue_order=split_order)
     if swarm:
         sns.swarmplot(data=df,x=groupby, y=variable, hue=splitby,ax=ax,order=order,hue_order=split_order, dodge=True, s=point_size,linewidth=point_outline, alpha=alpha)
     annot = Annotator(ax, pairs, data=df, x=groupby, y=variable, order=order, hue=splitby, hue_order=split_order)
