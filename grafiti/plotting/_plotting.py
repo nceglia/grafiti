@@ -11,6 +11,9 @@ import numpy as np
 from statannotations.Annotator import Annotator
 import itertools
 from scipy import sparse
+import collections
+import operator
+from sklearn import preprocessing
 
 from ..tools._tools import get_fov_graph
 
@@ -218,3 +221,62 @@ def boxplot(adata, groupby, variable, splitby, summarizeby, box=True, split_orde
     plt.xticks(rotation=90)
     if save != None:
         fig.savefig(save, dpi=dpi, bbox_inches='tight')
+
+
+def plot_logo(cell_counts, cell_distances, title="",save=None,spring_scale=0.4,fontsize=12, figsize=(4,4)):
+    G = nx.Graph()
+    for cell_type, count in cell_counts.items():
+        G.add_node(cell_type, size=count)
+    for cell1, cell2, distance in cell_distances:
+        G.add_edge(cell1, cell2, weight=distance)
+    fig,ax = plt.subplots(1,1,figsize=figsize))
+    pos = nx.spring_layout(G,scale=spring_scale,weight="weight")
+    sizes = [G.nodes[node]['size'] for node in G.nodes]  # scale size for visibility
+    sizes = preprocessing.MinMaxScaler(feature_range=(100,2000)).fit_transform(np.array(sizes).reshape(-1,1)).reshape(1,-1).tolist()[0]
+    nx.draw_networkx_nodes(G, pos, node_size=sizes,ax=ax,node_color="#999999")
+    edge_widths = [G[u][v]['weight'] for u, v in G.edges()]
+    edge_widths = preprocessing.MinMaxScaler(feature_range=(0,5)).fit_transform(np.array(edge_widths).reshape(-1,1)).reshape(1,-1).tolist()[0]
+    nx.draw_networkx_edges(G, pos, width=edge_widths,ax=ax)
+    nx.draw_networkx_labels(G, pos, font_size=fontsize, font_family='sans-serif',ax=ax)
+    fig.tight_layout()
+    plt.axis('off')
+    plt.title(title)
+    if save:
+        plt.savefig(save)
+
+def generate_motif_logo(adata, fov_key="sample_fov", fontsize=12, phenotype_key="cell_type", figsize=(4,4), spring_scale=0.4, exclude_phenotypes=[], save=None, title=""):
+    tcounts = collections.defaultdict(int)
+    num_images = len(set(adata.obs[fov_key]))
+    for x in set(adata.obs[fov_key]):
+        fcounts = collections.defaultdict(int)
+        df = adata[adata.obs[fov_key] == x].obs
+        if len(df.index) > 0:
+            total = len(df.index)
+            counts = df[phenotype_key].tolist()#d
+            for c in counts:
+                fcounts[c] += 1
+            for ct, ctnum in fcounts.items():
+                perc = ctnum / total
+                if perc > 0.1:
+                    tcounts[ct] += perc 
+    sorted_counts = list(reversed(sorted(tcounts.items(), key=operator.itemgetter(1))))
+    tcounts = dict()
+    for ct, counts in sorted_counts:
+        if ct not in exclude_phenotypes:
+            tcounts[ct] = counts / num_images
+    pairs = list(itertools.combinations(list(tcounts.keys()),2))
+    pair_distances = []
+    for p in pairs:
+        cdata =adata.obs[phenotype_key].isin(p)]
+        mask = (cdata.obsp["spatial_connectivities"] == 1)
+        distances = cdata.obsp["spatial_distances"]
+        distances = distances.multiply(mask)
+        pair_distances.append((p[0],p[1],np.median(distances.data)))
+    for p in list(tcounts.keys()):
+        cdata =adata.obs[phenotype_key].isin([p])]
+        mask = (cdata.obsp["spatial_connectivities"] == 1)
+        distances = cdata.obsp["spatial_distances"]
+        distances = distances.multiply(mask)
+        mdist = np.median(distances.data)
+        pair_distances.append((p,p,mdist))
+    plot_logo(tcounts,pair_distances,title=title, save=save, spring_scale=spring_scale, figsize=figsize, fontsize=fontsize)
