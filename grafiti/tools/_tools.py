@@ -1,6 +1,5 @@
 import umap as umap_ext
 import scanpy as sc
-from sklearn.manifold import TSNE
 import networkx as nx
 import math
 import numpy as np
@@ -9,6 +8,7 @@ import pandas as pd
 from sklearn.mixture import GaussianMixture
 from sklearn.metrics import davies_bouldin_score
 import seaborn as sns
+from sklearn.preprocessing import normalize
 
 grafiti_colors = [
     "#ff0000",  # Bright Red
@@ -98,6 +98,15 @@ def get_fov_graph(adata, fov_id, fov_key="sample_fov"):
 def fov_entropy(adata, fov_id, fov_key="sample_fov"):
     G = get_fov_graph(adata,fov_id,fov_key=fov_key)
     return shannon_entropy(G)
+
+def find_motifs_gmm(adata, cluster_key='grafiti_motif', prefix="GrafitiMotif", embedding_key="X_grafiti",k=10,max_iter=50):
+    X=normalize(adata.obsm["X_grafiti"])
+    gmm = GaussianMixture(n_components=k, random_state=0, max_iter=100,verbose=True,covariance_type="spherical").fit(X)
+    adata.obs[cluster_key] = ["{}{}".format(prefix,x) for x in gmm.predict(X).tolist()]
+    adata.uns["{}_proba".format(cluster_key)] = gmm.predict_proba(X)
+    for gm, prob in zip(sorted(set(adata.obs[cluster_key])),adata.uns["{}_proba".format(cluster_key)].T):
+        adata.obs["{}_proba".format(gm)] = prob
+    return gmm
 
 def depth(adata,fov_key="sample_fov",key_added="depth"):
     onion_map = dict()

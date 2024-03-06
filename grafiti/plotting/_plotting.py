@@ -122,6 +122,7 @@ def plot_fov_graph(adata, fov_id, use_coords=True, n_cols=4, s=10, save=None, cl
     if save != None:
         fig.savefig(save)
 
+
 def fov(adata,fov):
     adata.obs["X"] = adata.obsm["spatial"].T[0]
     adata.obs["Y"] = adata.obsm["spatial"].T[1]
@@ -213,7 +214,6 @@ def boxplot(adata, groupby, variable, splitby, summarizeby, box=True, split_orde
     annot.configure(test='Mann-Whitney', verbose=2)
     annot.apply_test()
     annot.annotate()
-    # fig.legend(loc='upper left', bbox_to_anchor=bbox)
     plt.legend(title=variable, loc="upper left", bbox_to_anchor=bbox)
     plt.xticks(rotation=90)
     if save != None:

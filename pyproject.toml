@@ -3,8 +3,8 @@ requires = ["setuptools>=61.0"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "grafiti"
-version = "0.0.1"
+name = "grafiti-spatial"
+version = "0.0.02"
 authors = [
   { name="Nicholas Ceglia", email="nickceglia@gmail.com" },
   { name="Maryam Pourmaleki", email="mapourmaleki11@gmail.com"},
