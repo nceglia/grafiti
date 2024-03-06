@@ -125,6 +125,14 @@ def plot_fov_graph(adata, fov_id, use_coords=True, n_cols=4, s=10, save=None, cl
     if save != None:
         fig.savefig(save)
 
+def crosstab_heatmap(adata, variable1, variable2, figsize=(6,6), save=None):
+    fig,ax=plt.subplots(1,1,figsize=figsize)
+    df = adata.obs[[variable1,variable2]]
+    df=pd.crosstab(df[variable1],df[variable2],normalize='index')
+    ax = sns.heatmap(df,ax=ax)
+    fig.tight_layout()
+    if save:
+        fig.savefig
 
 def fov(adata,fov):
     adata.obs["X"] = adata.obsm["spatial"].T[0]
@@ -229,7 +237,7 @@ def plot_logo(cell_counts, cell_distances, title="",save=None,spring_scale=0.4,f
         G.add_node(cell_type, size=count)
     for cell1, cell2, distance in cell_distances:
         G.add_edge(cell1, cell2, weight=distance)
-    fig,ax = plt.subplots(1,1,figsize=figsize))
+    fig,ax = plt.subplots(1,1,figsize=figsize)
     pos = nx.spring_layout(G,scale=spring_scale,weight="weight")
     sizes = [G.nodes[node]['size'] for node in G.nodes]  # scale size for visibility
     sizes = preprocessing.MinMaxScaler(feature_range=(100,2000)).fit_transform(np.array(sizes).reshape(-1,1)).reshape(1,-1).tolist()[0]
@@ -244,7 +252,8 @@ def plot_logo(cell_counts, cell_distances, title="",save=None,spring_scale=0.4,f
     if save:
         plt.savefig(save)
 
-def generate_motif_logo(adata, fov_key="sample_fov", fontsize=12, phenotype_key="cell_type", figsize=(4,4), spring_scale=0.4, exclude_phenotypes=[], save=None, title=""):
+def generate_motif_logo(adata, motif, cluster_key="grafiti_motif", fov_key="sample_fov", fontsize=12, phenotype_key="cell_type", figsize=(4,4), spring_scale=0.4, exclude_phenotypes=[], save=None, title=""):
+    adata = adata[adata.obs[cluster_key] == motif] 
     tcounts = collections.defaultdict(int)
     num_images = len(set(adata.obs[fov_key]))
     for x in set(adata.obs[fov_key]):
@@ -267,16 +276,57 @@ def generate_motif_logo(adata, fov_key="sample_fov", fontsize=12, phenotype_key=
     pairs = list(itertools.combinations(list(tcounts.keys()),2))
     pair_distances = []
     for p in pairs:
-        cdata =adata.obs[phenotype_key].isin(p)]
+        cdata =adata[adata.obs[phenotype_key].isin(p)]
         mask = (cdata.obsp["spatial_connectivities"] == 1)
         distances = cdata.obsp["spatial_distances"]
         distances = distances.multiply(mask)
         pair_distances.append((p[0],p[1],np.median(distances.data)))
     for p in list(tcounts.keys()):
-        cdata =adata.obs[phenotype_key].isin([p])]
+        cdata =adata[adata.obs[phenotype_key].isin([p])]
         mask = (cdata.obsp["spatial_connectivities"] == 1)
         distances = cdata.obsp["spatial_distances"]
         distances = distances.multiply(mask)
         mdist = np.median(distances.data)
         pair_distances.append((p,p,mdist))
     plot_logo(tcounts,pair_distances,title=title, save=save, spring_scale=spring_scale, figsize=figsize, fontsize=fontsize)
+
+def split_boxplot(adata, groupby, variable, summarizeby, box=True, order=None, swarm=True, point_outline=1, alpha=0.9,point_size=6, figsize=(7,5), bbox=(1.03, 1), dpi=300, save=None):
+    def get_expression(gene):
+        if type(adata.X) != sparse.csr_matrix:
+            adata.X = sparse.csr_matrix(adata.X)
+        return adata.X[:,adata.var.index.tolist().index(gene)].T.todense().tolist()[0]
+    df = adata.obs
+    if variable not in df.columns:
+        df[variable] = get_expression(variable)
+    splts = []
+    grps = []
+    summarize = []
+    values = []
+    for grp in set(adata.obs[groupby]):
+        sdf = df[df[groupby] == grp]
+        for smz in set(sdf[summarizeby]):
+            smzdata = sdf[sdf[summarizeby] == smz]
+            summarize.append(smz)
+            grps.append(grp)
+            values.append(np.mean(smzdata[variable]))
+    df = pd.DataFrame.from_dict({summarizeby:summarize,groupby:grps,variable:values})
+    if order == None:
+        order = list(set(df[groupby])) 
+    pairs = list(itertools.combinations(order,2))
+    fig,ax = plt.subplots(1,1,figsize=figsize)
+    if not box:
+        sns.violinplot(data=df,x=groupby, y=variable, ax=ax, order=order)
+    else:
+        sns.boxplot(data=df,x=groupby, y=variable, ax=ax, order=order)
+    if swarm:
+        sns.swarmplot(data=df,x=groupby, y=variable,ax=ax,order=order, dodge=True, s=point_size,linewidth=point_outline, alpha=alpha)
+    annot = Annotator(ax, pairs, data=df, x=groupby, y=variable, order=order)
+    annot.configure(test='Mann-Whitney', verbose=2)
+    annot.apply_test()
+    ax, test_results= annot.annotate()
+    # fig.legend(loc='upper left', bbox_to_anchor=bbox)
+    plt.legend(title=variable, loc="upper left", bbox_to_anchor=bbox)
+    plt.xticks(rotation=90)
+    if save != None:
+        fig.savefig(save, dpi=dpi, bbox_inches='tight')
+    return list(zip(pairs,[x.formatted_output for x in test_results]))
