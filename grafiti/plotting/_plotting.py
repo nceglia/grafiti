@@ -230,7 +230,7 @@ def boxplot(adata, groupby, variable, splitby, summarizeby, box=True, split_orde
     if save != None:
         fig.savefig(save, dpi=dpi, bbox_inches='tight')
 
-def plot_logo(cell_counts, cell_distances, title="",save=None,spring_scale=0.4,fontsize=12, figsize=(4,4),palette=None):
+def plot_logo(cell_counts, cell_distances, title="",save=None,spring_scale=0.4,fontsize=12, figsize=(4,4),palette=None,alpha=1.):
     G = nx.Graph()
     node_colors = []
     for cell_type, count in cell_counts.items():
@@ -243,8 +243,7 @@ def plot_logo(cell_counts, cell_distances, title="",save=None,spring_scale=0.4,f
     pos = nx.spring_layout(G,scale=spring_scale,weight="weight")
     sizes = [G.nodes[node]['size'] for node in G.nodes]  # scale size for visibility
     sizes = preprocessing.MinMaxScaler(feature_range=(100,2000)).fit_transform(np.array(sizes).reshape(-1,1)).reshape(1,-1).tolist()[0]
-    print(sizes)
-    nx.draw_networkx_nodes(G, pos, node_size=sizes,ax=ax,node_color=node_colors)
+    nx.draw_networkx_nodes(G, pos, node_size=sizes,ax=ax,node_color=node_colors,alpha=alpha)
     edge_widths = [G[u][v]['weight'] for u, v in G.edges()]
     edge_widths = preprocessing.MinMaxScaler(feature_range=(0,5)).fit_transform(np.array(edge_widths).reshape(-1,1)).reshape(1,-1).tolist()[0]
     nx.draw_networkx_edges(G, pos, width=edge_widths,ax=ax,alpha=0.6)
@@ -258,7 +257,7 @@ def plot_logo(cell_counts, cell_distances, title="",save=None,spring_scale=0.4,f
     if save:
         plt.savefig(save)
 
-def generate_motif_logo(adata, motif, cluster_key="grafiti_motif", normalize_by_fov=False, fov_key="sample_fov", run_de=False, fontsize=12, phenotype_key="cell_type", figsize=(3,3), spring_scale=0.4, exclude_phenotypes=[], save=None, title="", min_percentage=0.1,palette=None):
+def generate_motif_logo(adata, motif, cluster_key="grafiti_motif", normalize_by_fov=False, fov_key="sample_fov", run_de=False, fontsize=12, phenotype_key="cell_type", figsize=(3,3), spring_scale=0.4, exclude_phenotypes=[], save=None, title="", min_percentage=0.1,palette=None,alpha=1.):
     adata = adata[adata.obs[cluster_key] == motif] 
     tcounts = collections.defaultdict(int)
     num_images = len(set(adata.obs[fov_key]))
@@ -309,7 +308,7 @@ def generate_motif_logo(adata, motif, cluster_key="grafiti_motif", normalize_by_
         pair_distances.append((p,p,mdist))
     if palette == None:
         palette= dict(zip(list(tcounts.keys()), grafiti_colors))
-    plot_logo(tcounts, pair_distances, title=title, save=save, spring_scale=spring_scale, figsize=figsize, fontsize=fontsize, palette=palette)
+    plot_logo(tcounts, pair_distances, title=title, save=save, spring_scale=spring_scale, figsize=figsize, fontsize=fontsize, palette=palette,alpha=alpha)
 
 def split_boxplot(adata, groupby, variable, summarizeby, box=True, order=None, swarm=True, point_outline=1, alpha=0.9,point_size=6, figsize=(7,5), bbox=(1.03, 1), dpi=300, save=None):
     def get_expression(gene):
