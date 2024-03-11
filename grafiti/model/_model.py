@@ -17,11 +17,16 @@ from sklearn import preprocessing
 class GrafitiEncoderLayer(MessagePassing):
     def __init__(self, in_channels, out_channels):
         super(GrafitiEncoderLayer, self).__init__(aggr='add')
-        self.lin = torch.nn.Linear(in_channels, out_channels)
+        self.lin = torch.nn.Linear(2 * in_channels, out_channels)
 
-    def message(self, x_j, edge_attr):
-        edge_attr = edge_attr.to(x_j.dtype) 
-        return x_j / edge_attr.unsqueeze(-1) 
+    # def message(self, x_j, edge_attr):
+    #     edge_attr = edge_attr.to(x_j.dtype) 
+    #     return x_j / edge_attr.unsqueeze(-1) 
+    def message(self, x_i, x_j, edge_attr):
+        edge_attr = edge_attr.to(x_j.dtype)
+        # Concatenate self and neighbor features
+        x_j = torch.cat([x_i, x_j], dim=-1)
+        return x_j / edge_attr.unsqueeze(-1)
 
     def forward(self, x, edge_index, edge_attr):
         ret = self.propagate(edge_index, x=x, edge_attr=edge_attr)
@@ -32,12 +37,24 @@ class GrafitiDecoderLayer(MessagePassing):
 
     def __init__(self, in_channels, out_channels):
         super(GrafitiDecoderLayer, self).__init__()
-        self.lin = torch.nn.Linear(in_channels, out_channels)
+        self.lin = torch.nn.Linear(2 * in_channels, out_channels)
+        #self.lin = torch.nn.Linear(2 * in_channels, out_channels)
+        self.transform_x = torch.nn.Linear(in_channels, 2 * in_channels)
 
-    def message(self, x_j, edge_attr): 
+
+    # def message(self, x_j, edge_attr): 
+    #     edge_attr = edge_attr.to(x_j.dtype)
+    #     degree = x_j.size(0) 
+    #     degree_normalized_message = x_j / edge_attr.unsqueeze(-1) 
+    #     res = degree_normalized_message / degree
+    #     return res
+
+    def message(self, x_i, x_j, edge_attr):
         edge_attr = edge_attr.to(x_j.dtype)
-        degree = x_j.size(0) 
-        degree_normalized_message = x_j / edge_attr.unsqueeze(-1) 
+        degree = x_j.size(0)
+        # Concatenate self and neighbor features
+        x_j = torch.cat([x_i, x_j], dim=-1)
+        degree_normalized_message = x_j / edge_attr.unsqueeze(-1)
         res = degree_normalized_message / degree
         return res
 
@@ -46,8 +63,10 @@ class GrafitiDecoderLayer(MessagePassing):
         return res
 
     def forward(self, x, edge_index, edge_attr):
+        # Transform x to match the size of aggr_out
+        transformed_x = self.transform_x(x)
         aggr_out = self.propagate(edge_index, x=x, edge_attr=edge_attr)
-        transformed_features = x - aggr_out
+        transformed_features = transformed_x - aggr_out
         transformed_features = self.lin(transformed_features) 
         return F.leaky_relu(transformed_features, negative_slope=0.01)
     
@@ -60,7 +79,7 @@ class GrafitiEncoderModule(torch.nn.Module):
         lhidden_dim = self.layers[0]
         self.conv.append(GrafitiEncoderLayer(in_dim, lhidden_dim))
         for hidden_dim in self.layers[1:]:
-            self.conv.append(GrafitiEncoderLayer(lhidden_dim, hidden_dim))
+            self.conv.append(GrafitiEncoderLayer(lhidden_dim , hidden_dim))
             lhidden_dim = hidden_dim
 
     def forward(self, x, edge_index, edge_attr):
@@ -74,7 +93,7 @@ class GrafitiDecoderModule(torch.nn.Module):
         self.layers = layers
         self.conv = nn.ModuleList()
         lhidden_dim = self.layers[0]
-        self.conv.append(GrafitiDecoderLayer(in_dim, lhidden_dim))
+        self.conv.append(GrafitiDecoderLayer(in_dim, lhidden_dim ))
         for hidden_dim in self.layers[1:]:
             self.conv.append(GrafitiDecoderLayer(lhidden_dim, hidden_dim))
             lhidden_dim = hidden_dim

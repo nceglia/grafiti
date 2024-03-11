@@ -71,6 +71,7 @@ def umap(adata, key="grafiti", save=None, add_outline=False, s=20, figsize=(9,6)
     fig.tight_layout()
     if save != None:
         fig.savefig(save)
+
 def plot_fov_graph(adata, fov_id, use_coords=True, n_cols=4, s=10, save=None, cluster_key="grafiti_motif", spatial_key="spatial", fov_key="sample_fov", alpha=0.8, width=0.5, figsize=(6,6),bbox_to_anchor=(1.2,0.9)):
     if type(fov_id) == str:
         fov_id = [fov_id]
