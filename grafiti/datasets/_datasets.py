@@ -1,7 +1,7 @@
 import scanpy as sc
 import os
 
-dfolder = "/rtsess01/compute/juno/shah/users/pourmalm/for_sappy/"
+dfolder = "/data1/shahs3/users/pourmalm/for_grafiti/"
 
 def get_adata(adata):
     cluster_copy = os.path.join(dfolder,adata)
