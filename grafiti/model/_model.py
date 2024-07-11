@@ -1,4 +1,5 @@
 import scanpy as sc
+import scipy.sparse
 import numpy as np
 import seaborn as sns
 import umap
@@ -86,8 +87,9 @@ class GrafitiDecoderModule(torch.nn.Module):
 
 class GAE(object):
 
-    def __init__(self, adata, layers=[10,10], lr=0.00001, distance_threshold=None, exponent=2, distance_scale=None):
+    def __init__(self, adata, layers=[10,10], lr=0.00001, distance_threshold=None, exponent=2, distance_scale=None, device='cpu'):
         self.lr = lr
+        self.device = torch.device(device)
         print("Generating PyTorch Geometric Dataset...")
         if distance_threshold != None:
             distances = adata.obsp["spatial_distances"]
@@ -98,9 +100,15 @@ class GAE(object):
                     connectiv[row, col] = 0
             adata.obsp["spatial_connectivities"] = connectiv
         edges = adata.obsp["spatial_connectivities"].nonzero()
-        x = torch.from_numpy(adata.X)
-        x = x.float()
-        e = torch.from_numpy(np.array(edges)).type(torch.int64)
+
+        # Check if adata.X is a scipy.sparse.csr_matrix
+        if scipy.sparse.issparse(adata.X):
+            x = torch.from_numpy(adata.X.toarray())
+        else:
+            x = torch.from_numpy(adata.X)
+
+        x = x.float().to(self.device)
+        e = torch.from_numpy(np.array(edges)).type(torch.int64).to(self.device)
         attrs = [adata.obsp["spatial_distances"][x,y] for x,y in zip(*edges)]
         if distance_scale!=None:
             scaler = preprocessing.MinMaxScaler(feature_range=(0,distance_scale))
@@ -111,13 +119,13 @@ class GAE(object):
             attrs = np.array(attrs)
         data = Data(x=x, edge_index=e, edge_attr=attrs)
         self.adata = adata
-        data.edge_attr = torch.from_numpy(data.edge_attr)
+        data.edge_attr = torch.from_numpy(data.edge_attr).to(self.device)
         self.encoder_layers = layers
         self.decoder_layers = list(reversed(layers[1:])) + [data.num_features]
         print("Setting up Model...")
-        self.encoder = GrafitiEncoderModule(data.num_features,layers=self.encoder_layers, )
-        self.decoder = GrafitiDecoderModule(layers[-1],layers=self.decoder_layers)
-        self.gae = models.GAE(encoder=self.encoder,decoder=self.decoder)
+        self.encoder = GrafitiEncoderModule(data.num_features,layers=self.encoder_layers).to(self.device)
+        self.decoder = GrafitiDecoderModule(layers[-1],layers=self.decoder_layers).to(self.device)
+        self.gae = models.GAE(encoder=self.encoder,decoder=self.decoder).to(self.device)
         self.optimizer = torch.optim.Adadelta(self.gae.parameters(), lr=lr)
         self.loss = nn.MSELoss()
         self.losses = []
@@ -125,8 +133,11 @@ class GAE(object):
         self.data = data
         print("Ready to train!")
 
-    def train(self, epochs, update_interval=5, threshold=0):
-        prev_loss = 0.
+    def train(self, epochs, update_interval=5, threshold=0.001, patience=10):
+        prev_loss = np.inf
+        best_loss = np.inf
+        patience_counter = 0 # Counter to track the number of epochs without improvement
+
         for i in range(epochs):
             self.optimizer.zero_grad()  
             z = self.gae.encode(self.data.x, self.data.edge_index, self.data.edge_attr)
@@ -139,10 +150,22 @@ class GAE(object):
                 print("Epoch {} ** iteration {} ** Loss: {}".format(self.global_epoch, i, np.mean(self.losses[-update_interval:])))
             self.global_epoch += 1
             curr_loss = loss.item()
-            if abs(curr_loss - prev_loss) < threshold:
-                print("Minimum threhsold!")
+
+            # Check for improvement
+            if curr_loss < best_loss - threshold:
+                best_loss = curr_loss
+                patience_counter = 0 # Reset the counter if there is an improvement
+            else:
+                patience_counter += 1
+
+            # Early stopping condition
+            if patience_counter >= patience:
+                print("Early stopping due to no improvement over {} epochs.".format(patience))
                 break
-        print("Complete.")
+
+            prev_loss = curr_loss # Update previous loss
+
+        print("Training Complete.")
 
     def __str__(self):
         fmt = "Pytorch Dataset\n\n"
@@ -164,5 +187,5 @@ class GAE(object):
     def load_embedding(self, adata, encoding_key="X_grafiti"):
         with torch.no_grad():
             z = self.gae.encode(self.data.x, self.data.edge_index, self.data.edge_attr)
-            zcpu = z.detach().numpy()
+            zcpu = z.detach().cpu().numpy()
             adata.obsm[encoding_key] = zcpu
