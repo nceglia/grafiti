@@ -143,7 +143,7 @@ def seed_everything(seed=42):
 
 class GAE(object):
 
-    def __init__(self, adata, layers=[10,10], lr=0.00001, distance_threshold=None, exponent=2, distance_scale=None, device='cpu', alpha=10, beta=1, seed=42):
+    def __init__(self, adata, layers=[10,10], lr=0.00001, distance_threshold=None, exponent=2, distance_scale=None, device='cpu', alpha=10, beta=1, gamma=1, seed=42):
         seed_everything(seed) # Seed everything for reproducibility
         self.lr = lr
         self.device = torch.device(device)
@@ -184,6 +184,7 @@ class GAE(object):
         self.decoder = GrafitiDecoderModule(layers[-1],layers=self.decoder_layers).to(self.device)
         self.gae = models.GAE(encoder=self.encoder,decoder=self.decoder).to(self.device)
         self.optimizer = torch.optim.Adam(self.gae.parameters(), lr=lr)
+        self.scheduler = torch.optim.lr_scheduler.ExponentialLR(self.optimizer,gamma)
         self.contrastive_loss = nn.BCEWithLogitsLoss()
         self.reconstruction_loss = nn.MSELoss()
         self.losses = []
@@ -232,6 +233,7 @@ class GAE(object):
 
             loss.backward()
             self.optimizer.step()
+            self.scheduler.step() # Step the learning rate scheduler
             self.losses.append(loss.item())
             if i % update_interval == 0:
                 print("Epoch {} ** iteration {} ** Loss: {}".format(self.global_epoch, i, np.mean(self.losses[-update_interval:])))
