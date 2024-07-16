@@ -14,6 +14,7 @@ from torch_geometric.nn import GraphSAGE
 from torch_geometric.nn import aggr
 from torch_geometric.nn import MessagePassing
 from sklearn import preprocessing
+import random
 
 class GrafitiEncoderLayer(MessagePassing):
     def __init__(self, in_channels, out_channels):
@@ -131,9 +132,19 @@ def augmented_features(x):
     perm = torch.randperm(x.size(0))
     return x[perm] 
 
+def seed_everything(seed=42):
+    random.seed(seed)
+    np.random.seed(seed)
+    torch.manual_seed(seed)
+    torch.cuda.manual_seed(seed)
+    torch.cuda.manual_seed_all(seed)  # if you are using multi-GPU.
+    torch.backends.cudnn.deterministic = True
+    torch.backends.cudnn.benchmark = False
+
 class GAE(object):
 
-    def __init__(self, adata, layers=[10,10], lr=0.00001, distance_threshold=None, exponent=2, distance_scale=None, device='cpu', alpha=10, beta=1):
+    def __init__(self, adata, layers=[10,10], lr=0.00001, distance_threshold=None, exponent=2, distance_scale=None, device='cpu', alpha=10, beta=1, seed=42):
+        seed_everything(seed) # Seed everything for reproducibility
         self.lr = lr
         self.device = torch.device(device)
         print("Generating PyTorch Geometric Dataset...")
