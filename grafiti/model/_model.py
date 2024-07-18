@@ -195,6 +195,7 @@ class GAE(object):
         self.disc = Discriminator(layers[-1], self.device)
         self.alpha = alpha # Importance parameter for reconstruction loss
         self.beta = beta # Importance parameter for contrastive loss
+        self.gamma = gamma # Parameter for learning rate scheduler
         print("Ready to train!")
 
     def train(self, epochs, update_interval=5, threshold=0.001, patience=10):
