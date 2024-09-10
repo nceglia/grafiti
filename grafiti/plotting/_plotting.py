@@ -53,24 +53,25 @@ grafiti_colors = [
 def fovs(adata, cluster_key="sap", fov_key="sample_fov"):
     sq.pl.spatial_scatter(adata, color=cluster_key, shape=None, library_key=fov_key)
 
-def plot_fraction(adata,category,variable,save=None,color=grafiti_colors, figsize=(10,6)):
+def plot_fraction(adata,category,variable,save=None,color=grafiti_colors, figsize=(10,6), ax=None):
     df = adata.obs
     count_df = df.groupby([category, variable]).size().unstack(fill_value=0)
     proportion_df = count_df.divide(count_df.sum(axis=1), axis=0)
-    proportion_df.plot(kind="bar", stacked=True, figsize=figsize,color=color)
-    plt.ylabel("Fraction")
-    plt.ylim([0, 1])
-    plt.legend(title=variable, loc="upper left", bbox_to_anchor=(1, 1))
-    plt.tight_layout()
+    if ax == None:
+        fig, ax = plt.subplots(1,1,figsize=figsize, tight_layout=True)
+    proportion_df.plot(kind="bar", stacked=True, ax=ax, color=color)
+    ax.set_ylabel("Fraction")
+    ax.set_ylim([0, 1])
+    ax.legend(title=variable, loc="upper left", bbox_to_anchor=(1, 1))
     if save != None:
-        plt.savefig(save)
+        fig.savefig(save, bbox_inches='tight')
 
-def umap(adata, key="grafiti", save=None, add_outline=False, s=20, figsize=(9,6)):
-    fig, ax = plt.subplots(1,1,figsize=figsize)
+def umap(adata, key="grafiti", save=None, add_outline=False, s=20, figsize=(9,6), ax=None):
+    if ax == None:
+        fig, ax = plt.subplots(1,1,figsize=figsize, tight_layout=True)
     sc.pl.umap(adata,color=key,ax=ax,show=False,add_outline=add_outline,s=s)
-    fig.tight_layout()
     if save != None:
-        fig.savefig(save)
+        fig.savefig(save, bbox_inches='tight')
 
 def plot_fov_graph(adata, fov_id, use_coords=True, n_cols=4, s=10, save=None, cluster_key="grafiti_motif", spatial_key="spatial", fov_key="sample_fov", alpha=0.8, width=0.5, figsize=(6,6),bbox_to_anchor=(1.2,0.9)):
     if type(fov_id) == str:
