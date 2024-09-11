@@ -1336,3 +1336,157 @@ spectrum_params:
     metric: 'cosine'
     k: 8
     max_iter_clust: 20
+  # R9 is the same as R7 except with fewer nodes per layer
+  R9.0:
+    # grafiti params
+    layers: [10]
+    learning_rate: 0.05
+    gamma: 1.0
+    max_iter: 100
+    distance_thresh: 20
+    exponent: 1
+    distance_scale: 10
+    alpha: 0.0
+    threshold: 1e-10
+    seed: 0
+    # clustering params
+    resolution: 0.6
+    method: 'gm'
+    n_neighbors: 100
+    metric: 'cosine'
+    k: 8
+    max_iter_clust: 20
+  R9.1:
+    # grafiti params
+    layers: [7]
+    learning_rate: 0.05
+    gamma: 1.0
+    max_iter: 100
+    distance_thresh: 20
+    exponent: 1
+    distance_scale: 10
+    alpha: 0.0
+    threshold: 1e-10
+    seed: 0
+    # clustering params
+    resolution: 0.6
+    method: 'gm'
+    n_neighbors: 100
+    metric: 'cosine'
+    k: 8
+    max_iter_clust: 20
+  R9.2:
+    # grafiti params
+    layers: [5]
+    learning_rate: 0.05
+    gamma: 1.0
+    max_iter: 100
+    distance_thresh: 20
+    exponent: 1
+    distance_scale: 10
+    alpha: 0.0
+    threshold: 1e-10
+    seed: 0
+    # clustering params
+    resolution: 0.6
+    method: 'gm'
+    n_neighbors: 100
+    metric: 'cosine'
+    k: 8
+    max_iter_clust: 20
+  R9.3:
+    # grafiti params
+    layers: [3]
+    learning_rate: 0.05
+    gamma: 1.0
+    max_iter: 100
+    distance_thresh: 20
+    exponent: 1
+    distance_scale: 10
+    alpha: 0.0
+    threshold: 1e-10
+    seed: 0
+    # clustering params
+    resolution: 0.6
+    method: 'gm'
+    n_neighbors: 100
+    metric: 'cosine'
+    k: 8
+    max_iter_clust: 20
+  # R10 is the same as R8 except with fewer nodes per layer
+  R10.0:
+    # grafiti params
+    layers: [10]
+    learning_rate: 0.1
+    gamma: 1.0
+    max_iter: 100
+    distance_thresh: 20
+    exponent: 1
+    distance_scale: 10
+    alpha: 0.1
+    threshold: 1e-10
+    seed: 0
+    # clustering params
+    resolution: 0.6
+    method: 'gm'
+    n_neighbors: 100
+    metric: 'cosine'
+    k: 8
+    max_iter_clust: 20
+  R10.1:
+    # grafiti params
+    layers: [7]
+    learning_rate: 0.1
+    gamma: 1.0
+    max_iter: 100
+    distance_thresh: 20
+    exponent: 1
+    distance_scale: 10
+    alpha: 0.1
+    threshold: 1e-10
+    seed: 0
+    # clustering params
+    resolution: 0.6
+    method: 'gm'
+    n_neighbors: 100
+    metric: 'cosine'
+    k: 8
+    max_iter_clust: 20
+  R10.2:
+    # grafiti params
+    layers: [5]
+    learning_rate: 0.1
+    gamma: 1.0
+    max_iter: 100
+    distance_thresh: 20
+    exponent: 1
+    distance_scale: 10
+    alpha: 0.1
+    threshold: 1e-10
+    seed: 0
+    # clustering params
+    resolution: 0.6
+    method: 'gm'
+    n_neighbors: 100
+    metric: 'cosine'
+    k: 8
+    max_iter_clust: 20
+  R10.3:
+    # grafiti params
+    layers: [3]
+    learning_rate: 0.1
+    gamma: 1.0
+    max_iter: 100
+    distance_thresh: 20
+    exponent: 1
+    distance_scale: 10
+    alpha: 0.1
+    threshold: 1e-10
+    seed: 0
+    # clustering params
+    resolution: 0.6
+    method: 'gm'
+    n_neighbors: 100
+    metric: 'cosine'
+    k: 8
+    max_iter_clust: 20
