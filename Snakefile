@@ -28,7 +28,7 @@ rule all:
 
 
 rule run_grafiti:
-    input: '/data1/shahs3/users/pourmalm/for_grafiti/spectrum_all.h5ad'
+    input: lambda wildcards: config['spectrum_params'][wildcards.run]['input_file']
     params:
         layers = lambda wildcards: config['spectrum_params'][wildcards.run]['layers'],
         learning_rate = lambda wildcards: config['spectrum_params'][wildcards.run]['learning_rate'],
