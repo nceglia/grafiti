@@ -18,9 +18,9 @@ rule all:
             ]
         ),
         expand(
-            'plots/spectrum/{run}/fov_plots.pdf',
+            'plots/spectrum/{run}/centrality_scores.pdf',
             run=[
-                # 'R1.0'
+                # 'R15.1'
                 d for d in config['spectrum_params']
                 if (d not in bad_runs)
             ]
@@ -90,7 +90,9 @@ rule plot_motifs:
         fraction_ct = 'plots/spectrum/{run}/fraction_ct.pdf',
         fraction_sample = 'plots/spectrum/{run}/fraction_sample.pdf',
         fraction_total = 'plots/spectrum/{run}/fraction_plots.pdf',
-        fov_plots = 'plots/spectrum/{run}/fov_plots.pdf'
+        fov_plots = 'plots/spectrum/{run}/fov_plots.pdf',
+        motif_heatmap = 'plots/spectrum/{run}/motif_heatmap.pdf',
+        centrality_scores = 'plots/spectrum/{run}/centrality_scores.pdf'
     log: 'logs/spectrum/{run}/plot_motifs.log'
     resources: 
         mem_mb=1000 * 64,
@@ -107,4 +109,7 @@ rule plot_motifs:
         '-fc {output.fraction_ct} '
         '-fsa {output.fraction_sample} '
         '-ft {output.fraction_total} '
-        '-fov {output.fov_plots} &> {log}'
+        '-fov {output.fov_plots} '
+        '-mh {output.motif_heatmap} '
+        '-cs {output.centrality_scores} '
+        '&> {log}'

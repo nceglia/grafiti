@@ -1708,26 +1708,6 @@ spectrum_params:
     metric: 'cosine'
     k: 8
     max_iter_clust: 20
-  R10.7:
-    input_file: '/data1/shahs3/users/pourmalm/for_grafiti/spectrum_all.h5ad'
-    # grafiti params
-    layers: [100]
-    learning_rate: 0.1
-    gamma: 1.0
-    max_iter: 100
-    distance_thresh: 20
-    exponent: 1
-    distance_scale: 10
-    alpha: 0.1
-    threshold: 1e-10
-    seed: 0
-    # clustering params
-    resolution: 0.6
-    method: 'gm'
-    n_neighbors: 100
-    metric: 'cosine'
-    k: 8
-    max_iter_clust: 20
   # R11 repeats R9.1 and R10.1 except using a different input file which does quantile normalization of the raw input data
   R11.0:
     input_file: '/data1/shahs3/users/weinera2/grafiti/data/spectrum_all_quantnorm1_20240911.h5ad'
@@ -2091,7 +2071,7 @@ spectrum_params:
     metric: 'cosine'
     k: 8
     max_iter_clust: 20
-  # test the range of k=4 to k=7 clusters runs with layers=[50] and alpha=0.0
+  # test the range of k=4 to k=8 clusters runs with layers=[50] and alpha=0.0
   R14.0:
     input_file: '/data1/shahs3/users/pourmalm/for_grafiti/spectrum_all.h5ad'
     # grafiti params
@@ -2171,6 +2151,26 @@ spectrum_params:
     n_neighbors: 100
     metric: 'cosine'
     k: 7
+    max_iter_clust: 20
+  R14.4:
+    input_file: '/data1/shahs3/users/pourmalm/for_grafiti/spectrum_all.h5ad'
+    # grafiti params
+    layers: [50]
+    learning_rate: 0.1
+    gamma: 1.0
+    max_iter: 100
+    distance_thresh: 20
+    exponent: 1
+    distance_scale: 10
+    alpha: 0.0
+    threshold: 1e-10
+    seed: 0
+    # clustering params
+    resolution: 0.6
+    method: 'gm'
+    n_neighbors: 100
+    metric: 'cosine'
+    k: 8
     max_iter_clust: 20
   # test the range of k=4 to k=7 clusters runs with layers=[50] and alpha=0.1
   R15.0:
@@ -2252,4 +2252,105 @@ spectrum_params:
     n_neighbors: 100
     metric: 'cosine'
     k: 7
+    max_iter_clust: 20
+  # R16 is a repeat of R14 except using an input file which doesn't pass cell morphology features into the GAE
+  R16.0:
+    input_file: '/data1/shahs3/users/weinera2/grafiti/data/spectrum_all_no_cellmorph.h5ad'
+    # grafiti params
+    layers: [50]
+    learning_rate: 0.05
+    gamma: 1.0
+    max_iter: 100
+    distance_thresh: 20
+    exponent: 1
+    distance_scale: 10
+    alpha: 0.0
+    threshold: 1e-10
+    seed: 0
+    # clustering params
+    resolution: 0.6
+    method: 'gm'
+    n_neighbors: 100
+    metric: 'cosine'
+    k: 4
+    max_iter_clust: 20
+  R16.1:
+    input_file: '/data1/shahs3/users/weinera2/grafiti/data/spectrum_all_no_cellmorph.h5ad'
+    # grafiti params
+    layers: [50]
+    learning_rate: 0.05
+    gamma: 1.0
+    max_iter: 100
+    distance_thresh: 20
+    exponent: 1
+    distance_scale: 10
+    alpha: 0.0
+    threshold: 1e-10
+    seed: 0
+    # clustering params
+    resolution: 0.6
+    method: 'gm'
+    n_neighbors: 100
+    metric: 'cosine'
+    k: 5
+    max_iter_clust: 20
+  R16.2:
+    input_file: '/data1/shahs3/users/weinera2/grafiti/data/spectrum_all_no_cellmorph.h5ad'
+    # grafiti params
+    layers: [50]
+    learning_rate: 0.05
+    gamma: 1.0
+    max_iter: 100
+    distance_thresh: 20
+    exponent: 1
+    distance_scale: 10
+    alpha: 0.0
+    threshold: 1e-10
+    seed: 0
+    # clustering params
+    resolution: 0.6
+    method: 'gm'
+    n_neighbors: 100
+    metric: 'cosine'
+    k: 6
+    max_iter_clust: 20
+  R16.3:
+    input_file: '/data1/shahs3/users/weinera2/grafiti/data/spectrum_all_no_cellmorph.h5ad'
+    # grafiti params
+    layers: [50]
+    learning_rate: 0.05
+    gamma: 1.0
+    max_iter: 100
+    distance_thresh: 20
+    exponent: 1
+    distance_scale: 10
+    alpha: 0.0
+    threshold: 1e-10
+    seed: 0
+    # clustering params
+    resolution: 0.6
+    method: 'gm'
+    n_neighbors: 100
+    metric: 'cosine'
+    k: 7
+    max_iter_clust: 20
+  R16.4:
+    input_file: '/data1/shahs3/users/weinera2/grafiti/data/spectrum_all_no_cellmorph.h5ad'
+    # grafiti params
+    layers: [50]
+    learning_rate: 0.05
+    gamma: 1.0
+    max_iter: 100
+    distance_thresh: 20
+    exponent: 1
+    distance_scale: 10
+    alpha: 0.0
+    threshold: 1e-10
+    seed: 0
+    # clustering params
+    resolution: 0.6
+    method: 'gm'
+    n_neighbors: 100
+    metric: 'cosine'
+    k: 8
     max_iter_clust: 20
