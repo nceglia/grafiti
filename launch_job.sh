@@ -13,7 +13,7 @@
 # mamba activate snakemake7
 
 # Set default snakemake file if no argument is provided
-DEFAULT_SMK_FILE="Snakefile"
+DEFAULT_SMK_FILE="rules/spectrum.smk"
 SMK_FILE="${1:-$DEFAULT_SMK_FILE}"
 
 source /usersoftware/shahs3/users/weinera2/miniconda3/etc/profile.d/conda.sh
@@ -28,4 +28,4 @@ snakemake \
   --singularity-args "--bind /usersoftware --bind /data1 --bind /home/weinera2" \
   -s "$SMK_FILE" \
   --keep-going \
-  # --dryrun \
+  --dryrun \
