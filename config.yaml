@@ -1,0 +1,2356 @@
+spectrum_params:
+  R1.0:
+    input_file: '/data1/shahs3/users/pourmalm/for_grafiti/spectrum_all.h5ad'
+    # grafiti params
+    layers: [20, 20]
+    learning_rate: 0.05
+    gamma: 1.0
+    max_iter: 100
+    distance_thresh: 20
+    exponent: 1
+    distance_scale: 10
+    alpha: 0.0
+    threshold: 1e-10
+    seed: 42
+    # clustering params
+    resolution: 0.6
+    method: 'gm'
+    n_neighbors: 100
+    metric: 'cosine'
+    k: 15
+    max_iter_clust: 20
+  R1.1:
+    input_file: '/data1/shahs3/users/pourmalm/for_grafiti/spectrum_all.h5ad'
+    # grafiti params
+    layers: [20, 20]
+    learning_rate: 0.05
+    gamma: 1.0
+    max_iter: 100
+    distance_thresh: 20
+    exponent: 1
+    distance_scale: 10
+    alpha: 0.0
+    threshold: 1e-10
+    seed: 42
+    # clustering params
+    resolution: 0.6
+    method: 'gm'
+    n_neighbors: 100
+    metric: 'cosine'
+    k: 12
+    max_iter_clust: 20
+  R1.2:
+    input_file: '/data1/shahs3/users/pourmalm/for_grafiti/spectrum_all.h5ad'
+    # grafiti params
+    layers: [20, 20]
+    learning_rate: 0.05
+    gamma: 1.0
+    max_iter: 100
+    distance_thresh: 20
+    exponent: 1
+    distance_scale: 10
+    alpha: 0.0
+    threshold: 1e-10
+    seed: 42
+    # clustering params
+    resolution: 0.6
+    method: 'gm'
+    n_neighbors: 100
+    metric: 'cosine'
+    k: 10
+    max_iter_clust: 20
+  R1.3:
+    input_file: '/data1/shahs3/users/pourmalm/for_grafiti/spectrum_all.h5ad'
+    # grafiti params
+    layers: [20, 20]
+    learning_rate: 0.05
+    gamma: 1.0
+    max_iter: 100
+    distance_thresh: 20
+    exponent: 1
+    distance_scale: 10
+    alpha: 0.0
+    threshold: 1e-10
+    seed: 42
+    # clustering params
+    resolution: 0.6
+    method: 'gm'
+    n_neighbors: 100
+    metric: 'cosine'
+    k: 8
+    max_iter_clust: 20
+  R1.4:
+    input_file: '/data1/shahs3/users/pourmalm/for_grafiti/spectrum_all.h5ad'
+    # grafiti params
+    layers: [20, 20]
+    learning_rate: 0.05
+    gamma: 1.0
+    max_iter: 100
+    distance_thresh: 20
+    exponent: 1
+    distance_scale: 10
+    alpha: 0.0
+    threshold: 1e-10
+    seed: 42
+    # clustering params
+    resolution: 0.6
+    method: 'gm'
+    n_neighbors: 100
+    metric: 'cosine'
+    k: 6
+    max_iter_clust: 20
+  R1.5:
+    input_file: '/data1/shahs3/users/pourmalm/for_grafiti/spectrum_all.h5ad'
+    # grafiti params
+    layers: [20, 20]
+    learning_rate: 0.005
+    gamma: 1.0
+    max_iter: 100
+    distance_thresh: 20
+    exponent: 1
+    distance_scale: 10
+    alpha: 0.0
+    threshold: 1e-10
+    seed: 42
+    # clustering params
+    resolution: 0.6
+    method: 'gm'
+    n_neighbors: 100
+    metric: 'cosine'
+    k: 15
+    max_iter_clust: 20
+  R1.6:
+    input_file: '/data1/shahs3/users/pourmalm/for_grafiti/spectrum_all.h5ad'
+    # grafiti params
+    layers: [20, 20]
+    learning_rate: 0.1
+    gamma: 1.0
+    max_iter: 100
+    distance_thresh: 20
+    exponent: 1
+    distance_scale: 10
+    alpha: 0.0
+    threshold: 1e-10
+    seed: 42
+    # clustering params
+    resolution: 0.6
+    method: 'gm'
+    n_neighbors: 100
+    metric: 'cosine'
+    k: 15
+    max_iter_clust: 20
+  R1.7:
+    input_file: '/data1/shahs3/users/pourmalm/for_grafiti/spectrum_all.h5ad'
+    # grafiti params
+    layers: [20, 20]
+    learning_rate: 0.25
+    gamma: 1.0
+    max_iter: 100
+    distance_thresh: 20
+    exponent: 1
+    distance_scale: 10
+    alpha: 0.0
+    threshold: 1e-10
+    seed: 42
+    # clustering params
+    resolution: 0.6
+    method: 'gm'
+    n_neighbors: 100
+    metric: 'cosine'
+    k: 15
+    max_iter_clust: 20
+  R1.8:
+    input_file: '/data1/shahs3/users/pourmalm/for_grafiti/spectrum_all.h5ad'
+    # grafiti params
+    layers: [20, 20]
+    learning_rate: 0.05
+    gamma: 0.95
+    max_iter: 100
+    distance_thresh: 20
+    exponent: 1
+    distance_scale: 10
+    alpha: 0.0
+    threshold: 1e-10
+    seed: 42
+    # clustering params
+    resolution: 0.6
+    method: 'gm'
+    n_neighbors: 100
+    metric: 'cosine'
+    k: 15
+    max_iter_clust: 20
+  R1.9:
+    input_file: '/data1/shahs3/users/pourmalm/for_grafiti/spectrum_all.h5ad'
+    # grafiti params
+    layers: [20, 20]
+    learning_rate: 0.05
+    gamma: 0.99
+    max_iter: 100
+    distance_thresh: 20
+    exponent: 1
+    distance_scale: 10
+    alpha: 0.0
+    threshold: 1e-10
+    seed: 42
+    # clustering params
+    resolution: 0.6
+    method: 'gm'
+    n_neighbors: 100
+    metric: 'cosine'
+    k: 15
+    max_iter_clust: 20
+  # R2 has similar parameters to R1 except it only has one layer instead of 2
+  R2.0:
+    input_file: '/data1/shahs3/users/pourmalm/for_grafiti/spectrum_all.h5ad'
+    # grafiti params
+    layers: [20]
+    learning_rate: 0.05
+    gamma: 1.0
+    max_iter: 100
+    distance_thresh: 20
+    exponent: 1
+    distance_scale: 10
+    alpha: 0.0
+    threshold: 1e-10
+    seed: 42
+    # clustering params
+    resolution: 0.6
+    method: 'gm'
+    n_neighbors: 100
+    metric: 'cosine'
+    k: 15
+    max_iter_clust: 20
+  R2.1:
+    input_file: '/data1/shahs3/users/pourmalm/for_grafiti/spectrum_all.h5ad'
+    # grafiti params
+    layers: [20]
+    learning_rate: 0.05
+    gamma: 1.0
+    max_iter: 100
+    distance_thresh: 20
+    exponent: 1
+    distance_scale: 10
+    alpha: 0.0
+    threshold: 1e-10
+    seed: 42
+    # clustering params
+    resolution: 0.6
+    method: 'gm'
+    n_neighbors: 100
+    metric: 'cosine'
+    k: 12
+    max_iter_clust: 20
+  R2.2:
+    input_file: '/data1/shahs3/users/pourmalm/for_grafiti/spectrum_all.h5ad'
+    # grafiti params
+    layers: [20]
+    learning_rate: 0.05
+    gamma: 1.0
+    max_iter: 100
+    distance_thresh: 20
+    exponent: 1
+    distance_scale: 10
+    alpha: 0.0
+    threshold: 1e-10
+    seed: 42
+    # clustering params
+    resolution: 0.6
+    method: 'gm'
+    n_neighbors: 100
+    metric: 'cosine'
+    k: 10
+    max_iter_clust: 20
+  R2.3:
+    input_file: '/data1/shahs3/users/pourmalm/for_grafiti/spectrum_all.h5ad'
+    # grafiti params
+    layers: [20]
+    learning_rate: 0.05
+    gamma: 1.0
+    max_iter: 100
+    distance_thresh: 20
+    exponent: 1
+    distance_scale: 10
+    alpha: 0.0
+    threshold: 1e-10
+    seed: 42
+    # clustering params
+    resolution: 0.6
+    method: 'gm'
+    n_neighbors: 100
+    metric: 'cosine'
+    k: 8
+    max_iter_clust: 20
+  R2.4:
+    input_file: '/data1/shahs3/users/pourmalm/for_grafiti/spectrum_all.h5ad'
+    # grafiti params
+    layers: [20]
+    learning_rate: 0.05
+    gamma: 1.0
+    max_iter: 100
+    distance_thresh: 20
+    exponent: 1
+    distance_scale: 10
+    alpha: 0.0
+    threshold: 1e-10
+    seed: 42
+    # clustering params
+    resolution: 0.6
+    method: 'gm'
+    n_neighbors: 100
+    metric: 'cosine'
+    k: 6
+    max_iter_clust: 20
+  R2.5:
+    input_file: '/data1/shahs3/users/pourmalm/for_grafiti/spectrum_all.h5ad'
+    # grafiti params
+    layers: [20]
+    learning_rate: 0.005
+    gamma: 1.0
+    max_iter: 100
+    distance_thresh: 20
+    exponent: 1
+    distance_scale: 10
+    alpha: 0.0
+    threshold: 1e-10
+    seed: 42
+    # clustering params
+    resolution: 0.6
+    method: 'gm'
+    n_neighbors: 100
+    metric: 'cosine'
+    k: 15
+    max_iter_clust: 20
+  R2.6:
+    input_file: '/data1/shahs3/users/pourmalm/for_grafiti/spectrum_all.h5ad'
+    # grafiti params
+    layers: [20]
+    learning_rate: 0.1
+    gamma: 1.0
+    max_iter: 100
+    distance_thresh: 20
+    exponent: 1
+    distance_scale: 10
+    alpha: 0.0
+    threshold: 1e-10
+    seed: 42
+    # clustering params
+    resolution: 0.6
+    method: 'gm'
+    n_neighbors: 100
+    metric: 'cosine'
+    k: 15
+    max_iter_clust: 20
+  R2.7:
+    input_file: '/data1/shahs3/users/pourmalm/for_grafiti/spectrum_all.h5ad'
+    # grafiti params
+    layers: [20]
+    learning_rate: 0.25
+    gamma: 1.0
+    max_iter: 100
+    distance_thresh: 20
+    exponent: 1
+    distance_scale: 10
+    alpha: 0.0
+    threshold: 1e-10
+    seed: 42
+    # clustering params
+    resolution: 0.6
+    method: 'gm'
+    n_neighbors: 100
+    metric: 'cosine'
+    k: 15
+    max_iter_clust: 20
+  R2.8:
+    input_file: '/data1/shahs3/users/pourmalm/for_grafiti/spectrum_all.h5ad'
+    # grafiti params
+    layers: [20]
+    learning_rate: 0.05
+    gamma: 0.95
+    max_iter: 100
+    distance_thresh: 20
+    exponent: 1
+    distance_scale: 10
+    alpha: 0.0
+    threshold: 1e-10
+    seed: 42
+    # clustering params
+    resolution: 0.6
+    method: 'gm'
+    n_neighbors: 100
+    metric: 'cosine'
+    k: 15
+    max_iter_clust: 20
+  R2.9:
+    input_file: '/data1/shahs3/users/pourmalm/for_grafiti/spectrum_all.h5ad'
+    # grafiti params
+    layers: [20]
+    learning_rate: 0.05
+    gamma: 0.99
+    max_iter: 100
+    distance_thresh: 20
+    exponent: 1
+    distance_scale: 10
+    alpha: 0.0
+    threshold: 1e-10
+    seed: 42
+    # clustering params
+    resolution: 0.6
+    method: 'gm'
+    n_neighbors: 100
+    metric: 'cosine'
+    k: 15
+    max_iter_clust: 20
+  # R3 has similar parameters to R1 except it has alpha = 0.5 which means there is equal weight between contrastive and reconstruction loss
+  R3.0:
+    input_file: '/data1/shahs3/users/pourmalm/for_grafiti/spectrum_all.h5ad'
+    # grafiti params
+    layers: [20, 20]
+    learning_rate: 0.05
+    gamma: 1.0
+    max_iter: 100
+    distance_thresh: 20
+    exponent: 1
+    distance_scale: 10
+    alpha: 0.5
+    threshold: 1e-10
+    seed: 42
+    # clustering params
+    resolution: 0.6
+    method: 'gm'
+    n_neighbors: 100
+    metric: 'cosine'
+    k: 15
+    max_iter_clust: 20
+  R3.1:
+    input_file: '/data1/shahs3/users/pourmalm/for_grafiti/spectrum_all.h5ad'
+    # grafiti params
+    layers: [20, 20]
+    learning_rate: 0.05
+    gamma: 1.0
+    max_iter: 100
+    distance_thresh: 20
+    exponent: 1
+    distance_scale: 10
+    alpha: 0.5
+    threshold: 1e-10
+    seed: 42
+    # clustering params
+    resolution: 0.6
+    method: 'gm'
+    n_neighbors: 100
+    metric: 'cosine'
+    k: 12
+    max_iter_clust: 20
+  R3.2:
+    input_file: '/data1/shahs3/users/pourmalm/for_grafiti/spectrum_all.h5ad'
+    # grafiti params
+    layers: [20, 20]
+    learning_rate: 0.05
+    gamma: 1.0
+    max_iter: 100
+    distance_thresh: 20
+    exponent: 1
+    distance_scale: 10
+    alpha: 0.5
+    threshold: 1e-10
+    seed: 42
+    # clustering params
+    resolution: 0.6
+    method: 'gm'
+    n_neighbors: 100
+    metric: 'cosine'
+    k: 10
+    max_iter_clust: 20
+  R3.3:
+    input_file: '/data1/shahs3/users/pourmalm/for_grafiti/spectrum_all.h5ad'
+    # grafiti params
+    layers: [20, 20]
+    learning_rate: 0.05
+    gamma: 1.0
+    max_iter: 100
+    distance_thresh: 20
+    exponent: 1
+    distance_scale: 10
+    alpha: 0.5
+    threshold: 1e-10
+    seed: 42
+    # clustering params
+    resolution: 0.6
+    method: 'gm'
+    n_neighbors: 100
+    metric: 'cosine'
+    k: 8
+    max_iter_clust: 20
+  R3.4:
+    input_file: '/data1/shahs3/users/pourmalm/for_grafiti/spectrum_all.h5ad'
+    # grafiti params
+    layers: [20, 20]
+    learning_rate: 0.05
+    gamma: 1.0
+    max_iter: 100
+    distance_thresh: 20
+    exponent: 1
+    distance_scale: 10
+    alpha: 0.5
+    threshold: 1e-10
+    seed: 42
+    # clustering params
+    resolution: 0.6
+    method: 'gm'
+    n_neighbors: 100
+    metric: 'cosine'
+    k: 15
+    max_iter_clust: 20
+  R3.5:
+    input_file: '/data1/shahs3/users/pourmalm/for_grafiti/spectrum_all.h5ad'
+    # grafiti params
+    layers: [20, 20]
+    learning_rate: 0.005
+    gamma: 1.0
+    max_iter: 100
+    distance_thresh: 20
+    exponent: 1
+    distance_scale: 10
+    alpha: 0.5
+    threshold: 1e-10
+    seed: 42
+    # clustering params
+    resolution: 0.6
+    method: 'gm'
+    n_neighbors: 100
+    metric: 'cosine'
+    k: 15
+    max_iter_clust: 20
+  R3.6:
+    input_file: '/data1/shahs3/users/pourmalm/for_grafiti/spectrum_all.h5ad'
+    # grafiti params
+    layers: [20, 20]
+    learning_rate: 0.1
+    gamma: 1.0
+    max_iter: 100
+    distance_thresh: 20
+    exponent: 1
+    distance_scale: 10
+    alpha: 0.5
+    threshold: 1e-10
+    seed: 42
+    # clustering params
+    resolution: 0.6
+    method: 'gm'
+    n_neighbors: 100
+    metric: 'cosine'
+    k: 15
+    max_iter_clust: 20
+  R3.7:
+    input_file: '/data1/shahs3/users/pourmalm/for_grafiti/spectrum_all.h5ad'
+    # grafiti params
+    layers: [20, 20]
+    learning_rate: 0.25
+    gamma: 1.0
+    max_iter: 100
+    distance_thresh: 20
+    exponent: 1
+    distance_scale: 10
+    alpha: 0.5
+    threshold: 1e-10
+    seed: 42
+    # clustering params
+    resolution: 0.6
+    method: 'gm'
+    n_neighbors: 100
+    metric: 'cosine'
+    k: 15
+    max_iter_clust: 20
+  R3.8:
+    input_file: '/data1/shahs3/users/pourmalm/for_grafiti/spectrum_all.h5ad'
+    # grafiti params
+    layers: [20, 20]
+    learning_rate: 0.05
+    gamma: 0.95
+    max_iter: 100
+    distance_thresh: 20
+    exponent: 1
+    distance_scale: 10
+    alpha: 0.5
+    threshold: 1e-10
+    seed: 42
+    # clustering params
+    resolution: 0.6
+    method: 'gm'
+    n_neighbors: 100
+    metric: 'cosine'
+    k: 15
+    max_iter_clust: 20
+  R3.9:
+    input_file: '/data1/shahs3/users/pourmalm/for_grafiti/spectrum_all.h5ad'
+    # grafiti params
+    layers: [20, 20]
+    learning_rate: 0.05
+    gamma: 0.99
+    max_iter: 100
+    distance_thresh: 20
+    exponent: 1
+    distance_scale: 10
+    alpha: 0.5
+    threshold: 1e-10
+    seed: 42
+    # clustering params
+    resolution: 0.6
+    method: 'gm'
+    n_neighbors: 100
+    metric: 'cosine'
+    k: 15
+    max_iter_clust: 20
+  # R4 has similar parameters to R1 except it has alpha = 0.1 which means there is more weight on reconstruction loss than contrastive loss
+  R4.0:
+    input_file: '/data1/shahs3/users/pourmalm/for_grafiti/spectrum_all.h5ad'
+    # grafiti params
+    layers: [20, 20]
+    learning_rate: 0.05
+    gamma: 1.0
+    max_iter: 100
+    distance_thresh: 20
+    exponent: 1
+    distance_scale: 10
+    alpha: 0.1
+    threshold: 1e-10
+    seed: 42
+    # clustering params
+    resolution: 0.6
+    method: 'gm'
+    n_neighbors: 100
+    metric: 'cosine'
+    k: 15
+    max_iter_clust: 20
+  R4.1:
+    input_file: '/data1/shahs3/users/pourmalm/for_grafiti/spectrum_all.h5ad'
+    # grafiti params
+    layers: [20, 20]
+    learning_rate: 0.05
+    gamma: 1.0
+    max_iter: 100
+    distance_thresh: 20
+    exponent: 1
+    distance_scale: 10
+    alpha: 0.1
+    threshold: 1e-10
+    seed: 42
+    # clustering params
+    resolution: 0.6
+    method: 'gm'
+    n_neighbors: 100
+    metric: 'cosine'
+    k: 12
+    max_iter_clust: 20
+  R4.2:
+    input_file: '/data1/shahs3/users/pourmalm/for_grafiti/spectrum_all.h5ad'
+    # grafiti params
+    layers: [20, 20]
+    learning_rate: 0.05
+    gamma: 1.0
+    max_iter: 100
+    distance_thresh: 20
+    exponent: 1
+    distance_scale: 10
+    alpha: 0.1
+    threshold: 1e-10
+    seed: 42
+    # clustering params
+    resolution: 0.6
+    method: 'gm'
+    n_neighbors: 100
+    metric: 'cosine'
+    k: 10
+    max_iter_clust: 20
+  R4.3:
+    input_file: '/data1/shahs3/users/pourmalm/for_grafiti/spectrum_all.h5ad'
+    # grafiti params
+    layers: [20, 20]
+    learning_rate: 0.05
+    gamma: 1.0
+    max_iter: 100
+    distance_thresh: 20
+    exponent: 1
+    distance_scale: 10
+    alpha: 0.1
+    threshold: 1e-10
+    seed: 42
+    # clustering params
+    resolution: 0.6
+    method: 'gm'
+    n_neighbors: 100
+    metric: 'cosine'
+    k: 8
+    max_iter_clust: 20
+  R4.4:
+    input_file: '/data1/shahs3/users/pourmalm/for_grafiti/spectrum_all.h5ad'
+    # grafiti params
+    layers: [20, 20]
+    learning_rate: 0.05
+    gamma: 1.0
+    max_iter: 100
+    distance_thresh: 20
+    exponent: 1
+    distance_scale: 10
+    alpha: 0.1
+    threshold: 1e-10
+    seed: 42
+    # clustering params
+    resolution: 0.6
+    method: 'gm'
+    n_neighbors: 100
+    metric: 'cosine'
+    k: 6
+    max_iter_clust: 20
+  R4.5:
+    input_file: '/data1/shahs3/users/pourmalm/for_grafiti/spectrum_all.h5ad'
+    # grafiti params
+    layers: [20, 20]
+    learning_rate: 0.005
+    gamma: 1.0
+    max_iter: 100
+    distance_thresh: 20
+    exponent: 1
+    distance_scale: 10
+    alpha: 0.1
+    threshold: 1e-10
+    seed: 42
+    # clustering params
+    resolution: 0.6
+    method: 'gm'
+    n_neighbors: 100
+    metric: 'cosine'
+    k: 15
+    max_iter_clust: 20
+  R4.6:
+    input_file: '/data1/shahs3/users/pourmalm/for_grafiti/spectrum_all.h5ad'
+    # grafiti params
+    layers: [20, 20]
+    learning_rate: 0.1
+    gamma: 1.0
+    max_iter: 100
+    distance_thresh: 20
+    exponent: 1
+    distance_scale: 10
+    alpha: 0.1
+    threshold: 1e-10
+    seed: 42
+    # clustering params
+    resolution: 0.6
+    method: 'gm'
+    n_neighbors: 100
+    metric: 'cosine'
+    k: 15
+    max_iter_clust: 20
+  R4.7:
+    input_file: '/data1/shahs3/users/pourmalm/for_grafiti/spectrum_all.h5ad'
+    # grafiti params
+    layers: [20, 20]
+    learning_rate: 0.25
+    gamma: 1.0
+    max_iter: 100
+    distance_thresh: 20
+    exponent: 1
+    distance_scale: 10
+    alpha: 0.1
+    threshold: 1e-10
+    seed: 42
+    # clustering params
+    resolution: 0.6
+    method: 'gm'
+    n_neighbors: 100
+    metric: 'cosine'
+    k: 15
+    max_iter_clust: 20
+  R4.8:
+    input_file: '/data1/shahs3/users/pourmalm/for_grafiti/spectrum_all.h5ad'
+    # grafiti params
+    layers: [20, 20]
+    learning_rate: 0.05
+    gamma: 0.95
+    max_iter: 100
+    distance_thresh: 20
+    exponent: 1
+    distance_scale: 10
+    alpha: 0.1
+    threshold: 1e-10
+    seed: 42
+    # clustering params
+    resolution: 0.6
+    method: 'gm'
+    n_neighbors: 100
+    metric: 'cosine'
+    k: 15
+    max_iter_clust: 20
+  R4.9:
+    input_file: '/data1/shahs3/users/pourmalm/for_grafiti/spectrum_all.h5ad'
+    # grafiti params
+    layers: [20, 20]
+    learning_rate: 0.05
+    gamma: 0.99
+    max_iter: 100
+    distance_thresh: 20
+    exponent: 1
+    distance_scale: 10
+    alpha: 0.1
+    threshold: 1e-10
+    seed: 42
+    # clustering params
+    resolution: 0.6
+    method: 'gm'
+    n_neighbors: 100
+    metric: 'cosine'
+    k: 15
+    max_iter_clust: 20
+  # R5 has similar parameters to R2 except it has alpha = 0.5 which means there is equal weight between contrastive and reconstruction loss
+  R5.0:
+    input_file: '/data1/shahs3/users/pourmalm/for_grafiti/spectrum_all.h5ad'
+    # grafiti params
+    layers: [20]
+    learning_rate: 0.05
+    gamma: 1.0
+    max_iter: 100
+    distance_thresh: 20
+    exponent: 1
+    distance_scale: 10
+    alpha: 0.5
+    threshold: 1e-10
+    seed: 42
+    # clustering params
+    resolution: 0.6
+    method: 'gm'
+    n_neighbors: 100
+    metric: 'cosine'
+    k: 15
+    max_iter_clust: 20
+  R5.1:
+    input_file: '/data1/shahs3/users/pourmalm/for_grafiti/spectrum_all.h5ad'
+    # grafiti params
+    layers: [20]
+    learning_rate: 0.05
+    gamma: 1.0
+    max_iter: 100
+    distance_thresh: 20
+    exponent: 1
+    distance_scale: 10
+    alpha: 0.5
+    threshold: 1e-10
+    seed: 42
+    # clustering params
+    resolution: 0.6
+    method: 'gm'
+    n_neighbors: 100
+    metric: 'cosine'
+    k: 12
+    max_iter_clust: 20
+  R5.2:
+    input_file: '/data1/shahs3/users/pourmalm/for_grafiti/spectrum_all.h5ad'
+    # grafiti params
+    layers: [20]
+    learning_rate: 0.05
+    gamma: 1.0
+    max_iter: 100
+    distance_thresh: 20
+    exponent: 1
+    distance_scale: 10
+    alpha: 0.5
+    threshold: 1e-10
+    seed: 42
+    # clustering params
+    resolution: 0.6
+    method: 'gm'
+    n_neighbors: 100
+    metric: 'cosine'
+    k: 10
+    max_iter_clust: 20
+  R5.3:
+    input_file: '/data1/shahs3/users/pourmalm/for_grafiti/spectrum_all.h5ad'
+    # grafiti params
+    layers: [20]
+    learning_rate: 0.05
+    gamma: 1.0
+    max_iter: 100
+    distance_thresh: 20
+    exponent: 1
+    distance_scale: 10
+    alpha: 0.5
+    threshold: 1e-10
+    seed: 42
+    # clustering params
+    resolution: 0.6
+    method: 'gm'
+    n_neighbors: 100
+    metric: 'cosine'
+    k: 8
+    max_iter_clust: 20
+  R5.4:
+    input_file: '/data1/shahs3/users/pourmalm/for_grafiti/spectrum_all.h5ad'
+    # grafiti params
+    layers: [20]
+    learning_rate: 0.05
+    gamma: 1.0
+    max_iter: 100
+    distance_thresh: 20
+    exponent: 1
+    distance_scale: 10
+    alpha: 0.5
+    threshold: 1e-10
+    seed: 42
+    # clustering params
+    resolution: 0.6
+    method: 'gm'
+    n_neighbors: 100
+    metric: 'cosine'
+    k: 6
+    max_iter_clust: 20
+  R5.5:
+    input_file: '/data1/shahs3/users/pourmalm/for_grafiti/spectrum_all.h5ad'
+    # grafiti params
+    layers: [20]
+    learning_rate: 0.005
+    gamma: 1.0
+    max_iter: 100
+    distance_thresh: 20
+    exponent: 1
+    distance_scale: 10
+    alpha: 0.5
+    threshold: 1e-10
+    seed: 42
+    # clustering params
+    resolution: 0.6
+    method: 'gm'
+    n_neighbors: 100
+    metric: 'cosine'
+    k: 15
+    max_iter_clust: 20
+  R5.6:
+    input_file: '/data1/shahs3/users/pourmalm/for_grafiti/spectrum_all.h5ad'
+    # grafiti params
+    layers: [20]
+    learning_rate: 0.1
+    gamma: 1.0
+    max_iter: 100
+    distance_thresh: 20
+    exponent: 1
+    distance_scale: 10
+    alpha: 0.5
+    threshold: 1e-10
+    seed: 42
+    # clustering params
+    resolution: 0.6
+    method: 'gm'
+    n_neighbors: 100
+    metric: 'cosine'
+    k: 15
+    max_iter_clust: 20
+  R5.7:
+    input_file: '/data1/shahs3/users/pourmalm/for_grafiti/spectrum_all.h5ad'
+    # grafiti params
+    layers: [20]
+    learning_rate: 0.25
+    gamma: 1.0
+    max_iter: 100
+    distance_thresh: 20
+    exponent: 1
+    distance_scale: 10
+    alpha: 0.5
+    threshold: 1e-10
+    seed: 42
+    # clustering params
+    resolution: 0.6
+    method: 'gm'
+    n_neighbors: 100
+    metric: 'cosine'
+    k: 15
+    max_iter_clust: 20
+  R5.8:
+    input_file: '/data1/shahs3/users/pourmalm/for_grafiti/spectrum_all.h5ad'
+    # grafiti params
+    layers: [20]
+    learning_rate: 0.05
+    gamma: 0.95
+    max_iter: 100
+    distance_thresh: 20
+    exponent: 1
+    distance_scale: 10
+    alpha: 0.5
+    threshold: 1e-10
+    seed: 42
+    # clustering params
+    resolution: 0.6
+    method: 'gm'
+    n_neighbors: 100
+    metric: 'cosine'
+    k: 15
+    max_iter_clust: 20
+  R5.9:
+    input_file: '/data1/shahs3/users/pourmalm/for_grafiti/spectrum_all.h5ad'
+    # grafiti params
+    layers: [20]
+    learning_rate: 0.05
+    gamma: 0.99
+    max_iter: 100
+    distance_thresh: 20
+    exponent: 1
+    distance_scale: 10
+    alpha: 0.5
+    threshold: 1e-10
+    seed: 42
+    # clustering params
+    resolution: 0.6
+    method: 'gm'
+    n_neighbors: 100
+    metric: 'cosine'
+    k: 15
+    max_iter_clust: 20
+  # R6 has similar parameters to R2 except it has alpha = 0.1 which means there is more weight on reconstruction loss than contrastive loss
+  R6.0:
+    input_file: '/data1/shahs3/users/pourmalm/for_grafiti/spectrum_all.h5ad'
+    # grafiti params
+    layers: [20]
+    learning_rate: 0.05
+    gamma: 1.0
+    max_iter: 100
+    distance_thresh: 20
+    exponent: 1
+    distance_scale: 10
+    alpha: 0.1
+    threshold: 1e-10
+    seed: 42
+    # clustering params
+    resolution: 0.6
+    method: 'gm'
+    n_neighbors: 100
+    metric: 'cosine'
+    k: 15
+    max_iter_clust: 20
+  R6.1:
+    input_file: '/data1/shahs3/users/pourmalm/for_grafiti/spectrum_all.h5ad'
+    # grafiti params
+    layers: [20]
+    learning_rate: 0.05
+    gamma: 1.0
+    max_iter: 100
+    distance_thresh: 20
+    exponent: 1
+    distance_scale: 10
+    alpha: 0.1
+    threshold: 1e-10
+    seed: 42
+    # clustering params
+    resolution: 0.6
+    method: 'gm'
+    n_neighbors: 100
+    metric: 'cosine'
+    k: 12
+    max_iter_clust: 20
+  R6.2:
+    input_file: '/data1/shahs3/users/pourmalm/for_grafiti/spectrum_all.h5ad'
+    # grafiti params
+    layers: [20]
+    learning_rate: 0.05
+    gamma: 1.0
+    max_iter: 100
+    distance_thresh: 20
+    exponent: 1
+    distance_scale: 10
+    alpha: 0.1
+    threshold: 1e-10
+    seed: 42
+    # clustering params
+    resolution: 0.6
+    method: 'gm'
+    n_neighbors: 100
+    metric: 'cosine'
+    k: 10
+    max_iter_clust: 20
+  R6.3:
+    input_file: '/data1/shahs3/users/pourmalm/for_grafiti/spectrum_all.h5ad'
+    # grafiti params
+    layers: [20]
+    learning_rate: 0.05
+    gamma: 1.0
+    max_iter: 100
+    distance_thresh: 20
+    exponent: 1
+    distance_scale: 10
+    alpha: 0.1
+    threshold: 1e-10
+    seed: 42
+    # clustering params
+    resolution: 0.6
+    method: 'gm'
+    n_neighbors: 100
+    metric: 'cosine'
+    k: 8
+    max_iter_clust: 20
+  R6.4:
+    input_file: '/data1/shahs3/users/pourmalm/for_grafiti/spectrum_all.h5ad'
+    # grafiti params
+    layers: [20]
+    learning_rate: 0.05
+    gamma: 1.0
+    max_iter: 100
+    distance_thresh: 20
+    exponent: 1
+    distance_scale: 10
+    alpha: 0.1
+    threshold: 1e-10
+    seed: 42
+    # clustering params
+    resolution: 0.6
+    method: 'gm'
+    n_neighbors: 100
+    metric: 'cosine'
+    k: 6
+    max_iter_clust: 20
+  R6.5:
+    input_file: '/data1/shahs3/users/pourmalm/for_grafiti/spectrum_all.h5ad'
+    # grafiti params
+    layers: [20]
+    learning_rate: 0.005
+    gamma: 1.0
+    max_iter: 100
+    distance_thresh: 20
+    exponent: 1
+    distance_scale: 10
+    alpha: 0.1
+    threshold: 1e-10
+    seed: 42
+    # clustering params
+    resolution: 0.6
+    method: 'gm'
+    n_neighbors: 100
+    metric: 'cosine'
+    k: 15
+    max_iter_clust: 20
+  R6.6:
+    input_file: '/data1/shahs3/users/pourmalm/for_grafiti/spectrum_all.h5ad'
+    # grafiti params
+    layers: [20]
+    learning_rate: 0.1
+    gamma: 1.0
+    max_iter: 100
+    distance_thresh: 20
+    exponent: 1
+    distance_scale: 10
+    alpha: 0.1
+    threshold: 1e-10
+    seed: 42
+    # clustering params
+    resolution: 0.6
+    method: 'gm'
+    n_neighbors: 100
+    metric: 'cosine'
+    k: 15
+    max_iter_clust: 20
+  R6.7:
+    input_file: '/data1/shahs3/users/pourmalm/for_grafiti/spectrum_all.h5ad'
+    # grafiti params
+    layers: [20]
+    learning_rate: 0.25
+    gamma: 1.0
+    max_iter: 100
+    distance_thresh: 20
+    exponent: 1
+    distance_scale: 10
+    alpha: 0.1
+    threshold: 1e-10
+    seed: 42
+    # clustering params
+    resolution: 0.6
+    method: 'gm'
+    n_neighbors: 100
+    metric: 'cosine'
+    k: 15
+    max_iter_clust: 20
+  R6.8:
+    input_file: '/data1/shahs3/users/pourmalm/for_grafiti/spectrum_all.h5ad'
+    # grafiti params
+    layers: [20]
+    learning_rate: 0.05
+    gamma: 0.95
+    max_iter: 100
+    distance_thresh: 20
+    exponent: 1
+    distance_scale: 10
+    alpha: 0.1
+    threshold: 1e-10
+    seed: 42
+    # clustering params
+    resolution: 0.6
+    method: 'gm'
+    n_neighbors: 100
+    metric: 'cosine'
+    k: 15
+    max_iter_clust: 20
+  R6.9:
+    input_file: '/data1/shahs3/users/pourmalm/for_grafiti/spectrum_all.h5ad'
+    # grafiti params
+    layers: [20]
+    learning_rate: 0.05
+    gamma: 0.99
+    max_iter: 100
+    distance_thresh: 20
+    exponent: 1
+    distance_scale: 10
+    alpha: 0.1
+    threshold: 1e-10
+    seed: 42
+    # clustering params
+    resolution: 0.6
+    method: 'gm'
+    n_neighbors: 100
+    metric: 'cosine'
+    k: 15
+    max_iter_clust: 20
+  # R7.0 - R7.4 is the same as R2.0 (the best with alpha=0.0) except I pick a different random seed for each sub-run and set to 8 clusters
+  R7.0:
+    input_file: '/data1/shahs3/users/pourmalm/for_grafiti/spectrum_all.h5ad'
+    # grafiti params
+    layers: [20]
+    learning_rate: 0.05
+    gamma: 1.0
+    max_iter: 100
+    distance_thresh: 20
+    exponent: 1
+    distance_scale: 10
+    alpha: 0.0
+    threshold: 1e-10
+    seed: 0
+    # clustering params
+    resolution: 0.6
+    method: 'gm'
+    n_neighbors: 100
+    metric: 'cosine'
+    k: 8
+    max_iter_clust: 20
+  R7.1:
+    input_file: '/data1/shahs3/users/pourmalm/for_grafiti/spectrum_all.h5ad'
+    # grafiti params
+    layers: [20]
+    learning_rate: 0.05
+    gamma: 1.0
+    max_iter: 100
+    distance_thresh: 20
+    exponent: 1
+    distance_scale: 10
+    alpha: 0.0
+    threshold: 1e-10
+    seed: 1
+    # clustering params
+    resolution: 0.6
+    method: 'gm'
+    n_neighbors: 100
+    metric: 'cosine'
+    k: 8
+    max_iter_clust: 20
+  R7.2:
+    input_file: '/data1/shahs3/users/pourmalm/for_grafiti/spectrum_all.h5ad'
+    # grafiti params
+    layers: [20]
+    learning_rate: 0.05
+    gamma: 1.0
+    max_iter: 100
+    distance_thresh: 20
+    exponent: 1
+    distance_scale: 10
+    alpha: 0.0
+    threshold: 1e-10
+    seed: 2
+    # clustering params
+    resolution: 0.6
+    method: 'gm'
+    n_neighbors: 100
+    metric: 'cosine'
+    k: 8
+    max_iter_clust: 20
+  R7.3:
+    input_file: '/data1/shahs3/users/pourmalm/for_grafiti/spectrum_all.h5ad'
+    # grafiti params
+    layers: [20]
+    learning_rate: 0.05
+    gamma: 1.0
+    max_iter: 100
+    distance_thresh: 20
+    exponent: 1
+    distance_scale: 10
+    alpha: 0.0
+    threshold: 1e-10
+    seed: 3
+    # clustering params
+    resolution: 0.6
+    method: 'gm'
+    n_neighbors: 100
+    metric: 'cosine'
+    k: 8
+    max_iter_clust: 20
+  R7.4:
+    input_file: '/data1/shahs3/users/pourmalm/for_grafiti/spectrum_all.h5ad'
+    # grafiti params
+    layers: [20]
+    learning_rate: 0.05
+    gamma: 1.0
+    max_iter: 100
+    distance_thresh: 20
+    exponent: 1
+    distance_scale: 10
+    alpha: 0.0
+    threshold: 1e-10
+    seed: 4
+    # clustering params
+    resolution: 0.6
+    method: 'gm'
+    n_neighbors: 100
+    metric: 'cosine'
+    k: 8
+    max_iter_clust: 20
+  # R8.0 - R8.4 is the same as R6.6 (the best with alpha=0.1) except I pick a different random seed for each sub-run and set to 8 clusters
+  R8.0:
+    input_file: '/data1/shahs3/users/pourmalm/for_grafiti/spectrum_all.h5ad'
+    # grafiti params
+    layers: [20]
+    learning_rate: 0.1
+    gamma: 1.0
+    max_iter: 100
+    distance_thresh: 20
+    exponent: 1
+    distance_scale: 10
+    alpha: 0.1
+    threshold: 1e-10
+    seed: 0
+    # clustering params
+    resolution: 0.6
+    method: 'gm'
+    n_neighbors: 100
+    metric: 'cosine'
+    k: 8
+    max_iter_clust: 20
+  R8.1:
+    input_file: '/data1/shahs3/users/pourmalm/for_grafiti/spectrum_all.h5ad'
+    # grafiti params
+    layers: [20]
+    learning_rate: 0.1
+    gamma: 1.0
+    max_iter: 100
+    distance_thresh: 20
+    exponent: 1
+    distance_scale: 10
+    alpha: 0.1
+    threshold: 1e-10
+    seed: 1
+    # clustering params
+    resolution: 0.6
+    method: 'gm'
+    n_neighbors: 100
+    metric: 'cosine'
+    k: 8
+    max_iter_clust: 20
+  R8.2:
+    input_file: '/data1/shahs3/users/pourmalm/for_grafiti/spectrum_all.h5ad'
+    # grafiti params
+    layers: [20]
+    learning_rate: 0.1
+    gamma: 1.0
+    max_iter: 100
+    distance_thresh: 20
+    exponent: 1
+    distance_scale: 10
+    alpha: 0.1
+    threshold: 1e-10
+    seed: 2
+    # clustering params
+    resolution: 0.6
+    method: 'gm'
+    n_neighbors: 100
+    metric: 'cosine'
+    k: 8
+    max_iter_clust: 20
+  R8.3:
+    input_file: '/data1/shahs3/users/pourmalm/for_grafiti/spectrum_all.h5ad'
+    # grafiti params
+    layers: [20]
+    learning_rate: 0.1
+    gamma: 1.0
+    max_iter: 100
+    distance_thresh: 20
+    exponent: 1
+    distance_scale: 10
+    alpha: 0.1
+    threshold: 1e-10
+    seed: 3
+    # clustering params
+    resolution: 0.6
+    method: 'gm'
+    n_neighbors: 100
+    metric: 'cosine'
+    k: 8
+    max_iter_clust: 20
+  R8.4:
+    input_file: '/data1/shahs3/users/pourmalm/for_grafiti/spectrum_all.h5ad'
+    # grafiti params
+    layers: [20]
+    learning_rate: 0.1
+    gamma: 1.0
+    max_iter: 100
+    distance_thresh: 20
+    exponent: 1
+    distance_scale: 10
+    alpha: 0.1
+    threshold: 1e-10
+    seed: 4
+    # clustering params
+    resolution: 0.6
+    method: 'gm'
+    n_neighbors: 100
+    metric: 'cosine'
+    k: 8
+    max_iter_clust: 20
+  # R9 is the same as R7 except with different number of nodes per layer
+  R9.0:
+    input_file: '/data1/shahs3/users/pourmalm/for_grafiti/spectrum_all.h5ad'
+    # grafiti params
+    layers: [10]
+    learning_rate: 0.05
+    gamma: 1.0
+    max_iter: 100
+    distance_thresh: 20
+    exponent: 1
+    distance_scale: 10
+    alpha: 0.0
+    threshold: 1e-10
+    seed: 0
+    # clustering params
+    resolution: 0.6
+    method: 'gm'
+    n_neighbors: 100
+    metric: 'cosine'
+    k: 8
+    max_iter_clust: 20
+  R9.1:
+    input_file: '/data1/shahs3/users/pourmalm/for_grafiti/spectrum_all.h5ad'
+    # grafiti params
+    layers: [7]
+    learning_rate: 0.05
+    gamma: 1.0
+    max_iter: 100
+    distance_thresh: 20
+    exponent: 1
+    distance_scale: 10
+    alpha: 0.0
+    threshold: 1e-10
+    seed: 0
+    # clustering params
+    resolution: 0.6
+    method: 'gm'
+    n_neighbors: 100
+    metric: 'cosine'
+    k: 8
+    max_iter_clust: 20
+  R9.2:
+    input_file: '/data1/shahs3/users/pourmalm/for_grafiti/spectrum_all.h5ad'
+    # grafiti params
+    layers: [5]
+    learning_rate: 0.05
+    gamma: 1.0
+    max_iter: 100
+    distance_thresh: 20
+    exponent: 1
+    distance_scale: 10
+    alpha: 0.0
+    threshold: 1e-10
+    seed: 0
+    # clustering params
+    resolution: 0.6
+    method: 'gm'
+    n_neighbors: 100
+    metric: 'cosine'
+    k: 8
+    max_iter_clust: 20
+  R9.3:
+    input_file: '/data1/shahs3/users/pourmalm/for_grafiti/spectrum_all.h5ad'
+    # grafiti params
+    layers: [3]
+    learning_rate: 0.05
+    gamma: 1.0
+    max_iter: 100
+    distance_thresh: 20
+    exponent: 1
+    distance_scale: 10
+    alpha: 0.0
+    threshold: 1e-10
+    seed: 0
+    # clustering params
+    resolution: 0.6
+    method: 'gm'
+    n_neighbors: 100
+    metric: 'cosine'
+    k: 8
+    max_iter_clust: 20
+  R9.4:
+    input_file: '/data1/shahs3/users/pourmalm/for_grafiti/spectrum_all.h5ad'
+    # grafiti params
+    layers: [30]
+    learning_rate: 0.05
+    gamma: 1.0
+    max_iter: 100
+    distance_thresh: 20
+    exponent: 1
+    distance_scale: 10
+    alpha: 0.0
+    threshold: 1e-10
+    seed: 0
+    # clustering params
+    resolution: 0.6
+    method: 'gm'
+    n_neighbors: 100
+    metric: 'cosine'
+    k: 8
+    max_iter_clust: 20
+  R9.5:
+    input_file: '/data1/shahs3/users/pourmalm/for_grafiti/spectrum_all.h5ad'
+    # grafiti params
+    layers: [50]
+    learning_rate: 0.05
+    gamma: 1.0
+    max_iter: 100
+    distance_thresh: 20
+    exponent: 1
+    distance_scale: 10
+    alpha: 0.0
+    threshold: 1e-10
+    seed: 0
+    # clustering params
+    resolution: 0.6
+    method: 'gm'
+    n_neighbors: 100
+    metric: 'cosine'
+    k: 8
+    max_iter_clust: 20
+  R9.6:
+    input_file: '/data1/shahs3/users/pourmalm/for_grafiti/spectrum_all.h5ad'
+    # grafiti params
+    layers: [75]
+    learning_rate: 0.05
+    gamma: 1.0
+    max_iter: 100
+    distance_thresh: 20
+    exponent: 1
+    distance_scale: 10
+    alpha: 0.0
+    threshold: 1e-10
+    seed: 0
+    # clustering params
+    resolution: 0.6
+    method: 'gm'
+    n_neighbors: 100
+    metric: 'cosine'
+    k: 8
+    max_iter_clust: 20
+  R9.7:
+    input_file: '/data1/shahs3/users/pourmalm/for_grafiti/spectrum_all.h5ad'
+    # grafiti params
+    layers: [100]
+    learning_rate: 0.05
+    gamma: 1.0
+    max_iter: 100
+    distance_thresh: 20
+    exponent: 1
+    distance_scale: 10
+    alpha: 0.0
+    threshold: 1e-10
+    seed: 0
+    # clustering params
+    resolution: 0.6
+    method: 'gm'
+    n_neighbors: 100
+    metric: 'cosine'
+    k: 8
+    max_iter_clust: 20
+  # R10 is the same as R8 except with different number of nodes per layer
+  R10.0:
+    input_file: '/data1/shahs3/users/pourmalm/for_grafiti/spectrum_all.h5ad'
+    # grafiti params
+    layers: [10]
+    learning_rate: 0.1
+    gamma: 1.0
+    max_iter: 100
+    distance_thresh: 20
+    exponent: 1
+    distance_scale: 10
+    alpha: 0.1
+    threshold: 1e-10
+    seed: 0
+    # clustering params
+    resolution: 0.6
+    method: 'gm'
+    n_neighbors: 100
+    metric: 'cosine'
+    k: 8
+    max_iter_clust: 20
+  R10.1:
+    input_file: '/data1/shahs3/users/pourmalm/for_grafiti/spectrum_all.h5ad'
+    # grafiti params
+    layers: [7]
+    learning_rate: 0.1
+    gamma: 1.0
+    max_iter: 100
+    distance_thresh: 20
+    exponent: 1
+    distance_scale: 10
+    alpha: 0.1
+    threshold: 1e-10
+    seed: 0
+    # clustering params
+    resolution: 0.6
+    method: 'gm'
+    n_neighbors: 100
+    metric: 'cosine'
+    k: 8
+    max_iter_clust: 20
+  R10.2:
+    input_file: '/data1/shahs3/users/pourmalm/for_grafiti/spectrum_all.h5ad'
+    # grafiti params
+    layers: [5]
+    learning_rate: 0.1
+    gamma: 1.0
+    max_iter: 100
+    distance_thresh: 20
+    exponent: 1
+    distance_scale: 10
+    alpha: 0.1
+    threshold: 1e-10
+    seed: 0
+    # clustering params
+    resolution: 0.6
+    method: 'gm'
+    n_neighbors: 100
+    metric: 'cosine'
+    k: 8
+    max_iter_clust: 20
+  R10.3:
+    input_file: '/data1/shahs3/users/pourmalm/for_grafiti/spectrum_all.h5ad'
+    # grafiti params
+    layers: [3]
+    learning_rate: 0.1
+    gamma: 1.0
+    max_iter: 100
+    distance_thresh: 20
+    exponent: 1
+    distance_scale: 10
+    alpha: 0.1
+    threshold: 1e-10
+    seed: 0
+    # clustering params
+    resolution: 0.6
+    method: 'gm'
+    n_neighbors: 100
+    metric: 'cosine'
+    k: 8
+    max_iter_clust: 20
+  R10.4:
+    input_file: '/data1/shahs3/users/pourmalm/for_grafiti/spectrum_all.h5ad'
+    # grafiti params
+    layers: [30]
+    learning_rate: 0.1
+    gamma: 1.0
+    max_iter: 100
+    distance_thresh: 20
+    exponent: 1
+    distance_scale: 10
+    alpha: 0.1
+    threshold: 1e-10
+    seed: 0
+    # clustering params
+    resolution: 0.6
+    method: 'gm'
+    n_neighbors: 100
+    metric: 'cosine'
+    k: 8
+    max_iter_clust: 20
+  R10.5:
+    input_file: '/data1/shahs3/users/pourmalm/for_grafiti/spectrum_all.h5ad'
+    # grafiti params
+    layers: [50]
+    learning_rate: 0.1
+    gamma: 1.0
+    max_iter: 100
+    distance_thresh: 20
+    exponent: 1
+    distance_scale: 10
+    alpha: 0.1
+    threshold: 1e-10
+    seed: 0
+    # clustering params
+    resolution: 0.6
+    method: 'gm'
+    n_neighbors: 100
+    metric: 'cosine'
+    k: 8
+    max_iter_clust: 20
+  R10.6:
+    input_file: '/data1/shahs3/users/pourmalm/for_grafiti/spectrum_all.h5ad'
+    # grafiti params
+    layers: [75]
+    learning_rate: 0.1
+    gamma: 1.0
+    max_iter: 100
+    distance_thresh: 20
+    exponent: 1
+    distance_scale: 10
+    alpha: 0.1
+    threshold: 1e-10
+    seed: 0
+    # clustering params
+    resolution: 0.6
+    method: 'gm'
+    n_neighbors: 100
+    metric: 'cosine'
+    k: 8
+    max_iter_clust: 20
+  # R11 repeats R9.1 and R10.1 except using a different input file which does quantile normalization of the raw input data
+  R11.0:
+    input_file: '/data1/shahs3/users/weinera2/grafiti/data/spectrum_all_quantnorm1_20240911.h5ad'
+    # grafiti params
+    layers: [7]
+    learning_rate: 0.1
+    gamma: 1.0
+    max_iter: 100
+    distance_thresh: 20
+    exponent: 1
+    distance_scale: 10
+    alpha: 0.0
+    threshold: 1e-10
+    seed: 0
+    # clustering params
+    resolution: 0.6
+    method: 'gm'
+    n_neighbors: 100
+    metric: 'cosine'
+    k: 8
+    max_iter_clust: 20
+  R11.1:
+    input_file: '/data1/shahs3/users/weinera2/grafiti/data/spectrum_all_quantnorm1_20240911.h5ad'
+    # grafiti params
+    layers: [7]
+    learning_rate: 0.1
+    gamma: 1.0
+    max_iter: 100
+    distance_thresh: 20
+    exponent: 1
+    distance_scale: 10
+    alpha: 0.1
+    threshold: 1e-10
+    seed: 0
+    # clustering params
+    resolution: 0.6
+    method: 'gm'
+    n_neighbors: 100
+    metric: 'cosine'
+    k: 8
+    max_iter_clust: 20
+  # R12 repeats R9 except varying the distance_threshold parameter instead of layers
+  R12.0:
+    input_file: '/data1/shahs3/users/pourmalm/for_grafiti/spectrum_all.h5ad'
+    # grafiti params
+    layers: [50]
+    learning_rate: 0.1
+    gamma: 1.0
+    max_iter: 100
+    distance_thresh: 15
+    exponent: 1
+    distance_scale: 10
+    alpha: 0.0
+    threshold: 1e-10
+    seed: 0
+    # clustering params
+    resolution: 0.6
+    method: 'gm'
+    n_neighbors: 100
+    metric: 'cosine'
+    k: 8
+    max_iter_clust: 20
+  R12.1:
+    input_file: '/data1/shahs3/users/pourmalm/for_grafiti/spectrum_all.h5ad'
+    # grafiti params
+    layers: [50]
+    learning_rate: 0.1
+    gamma: 1.0
+    max_iter: 100
+    distance_thresh: 10
+    exponent: 1
+    distance_scale: 10
+    alpha: 0.0
+    threshold: 1e-10
+    seed: 0
+    # clustering params
+    resolution: 0.6
+    method: 'gm'
+    n_neighbors: 100
+    metric: 'cosine'
+    k: 8
+    max_iter_clust: 20
+  R12.2:
+    input_file: '/data1/shahs3/users/pourmalm/for_grafiti/spectrum_all.h5ad'
+    # grafiti params
+    layers: [50]
+    learning_rate: 0.1
+    gamma: 1.0
+    max_iter: 100
+    distance_thresh: 5
+    exponent: 1
+    distance_scale: 10
+    alpha: 0.0
+    threshold: 1e-10
+    seed: 0
+    # clustering params
+    resolution: 0.6
+    method: 'gm'
+    n_neighbors: 100
+    metric: 'cosine'
+    k: 8
+    max_iter_clust: 20
+  R12.3:
+    input_file: '/data1/shahs3/users/pourmalm/for_grafiti/spectrum_all.h5ad'
+    # grafiti params
+    layers: [50]
+    learning_rate: 0.1
+    gamma: 1.0
+    max_iter: 100
+    distance_thresh: 2.5
+    exponent: 1
+    distance_scale: 10
+    alpha: 0.0
+    threshold: 1e-10
+    seed: 0
+    # clustering params
+    resolution: 0.6
+    method: 'gm'
+    n_neighbors: 100
+    metric: 'cosine'
+    k: 8
+    max_iter_clust: 20
+  R12.4:
+    input_file: '/data1/shahs3/users/pourmalm/for_grafiti/spectrum_all.h5ad'
+    # grafiti params
+    layers: [50]
+    learning_rate: 0.1
+    gamma: 1.0
+    max_iter: 100
+    distance_thresh: 25
+    exponent: 1
+    distance_scale: 10
+    alpha: 0.0
+    threshold: 1e-10
+    seed: 0
+    # clustering params
+    resolution: 0.6
+    method: 'gm'
+    n_neighbors: 100
+    metric: 'cosine'
+    k: 8
+    max_iter_clust: 20
+  R12.5:
+    input_file: '/data1/shahs3/users/pourmalm/for_grafiti/spectrum_all.h5ad'
+    # grafiti params
+    layers: [50]
+    learning_rate: 0.1
+    gamma: 1.0
+    max_iter: 100
+    distance_thresh: 30
+    exponent: 1
+    distance_scale: 10
+    alpha: 0.0
+    threshold: 1e-10
+    seed: 0
+    # clustering params
+    resolution: 0.6
+    method: 'gm'
+    n_neighbors: 100
+    metric: 'cosine'
+    k: 8
+    max_iter_clust: 20
+  R12.5:
+    input_file: '/data1/shahs3/users/pourmalm/for_grafiti/spectrum_all.h5ad'
+    # grafiti params
+    layers: [50]
+    learning_rate: 0.1
+    gamma: 1.0
+    max_iter: 100
+    distance_thresh: 40
+    exponent: 1
+    distance_scale: 10
+    alpha: 0.0
+    threshold: 1e-10
+    seed: 0
+    # clustering params
+    resolution: 0.6
+    method: 'gm'
+    n_neighbors: 100
+    metric: 'cosine'
+    k: 8
+    max_iter_clust: 20
+  R12.5:
+    input_file: '/data1/shahs3/users/pourmalm/for_grafiti/spectrum_all.h5ad'
+    # grafiti params
+    layers: [50]
+    learning_rate: 0.1
+    gamma: 1.0
+    max_iter: 100
+    distance_thresh: 50
+    exponent: 1
+    distance_scale: 10
+    alpha: 0.0
+    threshold: 1e-10
+    seed: 0
+    # clustering params
+    resolution: 0.6
+    method: 'gm'
+    n_neighbors: 100
+    metric: 'cosine'
+    k: 8
+    max_iter_clust: 20
+  # R13 is the same R12 except with alpha=0.1 instead of alpha=0.0
+  R13.0:
+    input_file: '/data1/shahs3/users/pourmalm/for_grafiti/spectrum_all.h5ad'
+    # grafiti params
+    layers: [50]
+    learning_rate: 0.1
+    gamma: 1.0
+    max_iter: 100
+    distance_thresh: 15
+    exponent: 1
+    distance_scale: 10
+    alpha: 0.1
+    threshold: 1e-10
+    seed: 0
+    # clustering params
+    resolution: 0.6
+    method: 'gm'
+    n_neighbors: 100
+    metric: 'cosine'
+    k: 8
+    max_iter_clust: 20
+  R13.1:
+    input_file: '/data1/shahs3/users/pourmalm/for_grafiti/spectrum_all.h5ad'
+    # grafiti params
+    layers: [50]
+    learning_rate: 0.1
+    gamma: 1.0
+    max_iter: 100
+    distance_thresh: 10
+    exponent: 1
+    distance_scale: 10
+    alpha: 0.1
+    threshold: 1e-10
+    seed: 0
+    # clustering params
+    resolution: 0.6
+    method: 'gm'
+    n_neighbors: 100
+    metric: 'cosine'
+    k: 8
+    max_iter_clust: 20
+  R13.2:
+    input_file: '/data1/shahs3/users/pourmalm/for_grafiti/spectrum_all.h5ad'
+    # grafiti params
+    layers: [50]
+    learning_rate: 0.1
+    gamma: 1.0
+    max_iter: 100
+    distance_thresh: 5
+    exponent: 1
+    distance_scale: 10
+    alpha: 0.1
+    threshold: 1e-10
+    seed: 0
+    # clustering params
+    resolution: 0.6
+    method: 'gm'
+    n_neighbors: 100
+    metric: 'cosine'
+    k: 8
+    max_iter_clust: 20
+  R13.3:
+    input_file: '/data1/shahs3/users/pourmalm/for_grafiti/spectrum_all.h5ad'
+    # grafiti params
+    layers: [50]
+    learning_rate: 0.1
+    gamma: 1.0
+    max_iter: 100
+    distance_thresh: 2.5
+    exponent: 1
+    distance_scale: 10
+    alpha: 0.1
+    threshold: 1e-10
+    seed: 0
+    # clustering params
+    resolution: 0.6
+    method: 'gm'
+    n_neighbors: 100
+    metric: 'cosine'
+    k: 8
+    max_iter_clust: 20
+  R13.4:
+    input_file: '/data1/shahs3/users/pourmalm/for_grafiti/spectrum_all.h5ad'
+    # grafiti params
+    layers: [50]
+    learning_rate: 0.1
+    gamma: 1.0
+    max_iter: 100
+    distance_thresh: 25
+    exponent: 1
+    distance_scale: 10
+    alpha: 0.1
+    threshold: 1e-10
+    seed: 0
+    # clustering params
+    resolution: 0.6
+    method: 'gm'
+    n_neighbors: 100
+    metric: 'cosine'
+    k: 8
+    max_iter_clust: 20
+  R13.5:
+    input_file: '/data1/shahs3/users/pourmalm/for_grafiti/spectrum_all.h5ad'
+    # grafiti params
+    layers: [50]
+    learning_rate: 0.1
+    gamma: 1.0
+    max_iter: 100
+    distance_thresh: 30
+    exponent: 1
+    distance_scale: 10
+    alpha: 0.1
+    threshold: 1e-10
+    seed: 0
+    # clustering params
+    resolution: 0.6
+    method: 'gm'
+    n_neighbors: 100
+    metric: 'cosine'
+    k: 8
+    max_iter_clust: 20
+  R13.5:
+    input_file: '/data1/shahs3/users/pourmalm/for_grafiti/spectrum_all.h5ad'
+    # grafiti params
+    layers: [50]
+    learning_rate: 0.1
+    gamma: 1.0
+    max_iter: 100
+    distance_thresh: 40
+    exponent: 1
+    distance_scale: 10
+    alpha: 0.1
+    threshold: 1e-10
+    seed: 0
+    # clustering params
+    resolution: 0.6
+    method: 'gm'
+    n_neighbors: 100
+    metric: 'cosine'
+    k: 8
+    max_iter_clust: 20
+  R13.5:
+    input_file: '/data1/shahs3/users/pourmalm/for_grafiti/spectrum_all.h5ad'
+    # grafiti params
+    layers: [50]
+    learning_rate: 0.1
+    gamma: 1.0
+    max_iter: 100
+    distance_thresh: 50
+    exponent: 1
+    distance_scale: 10
+    alpha: 0.1
+    threshold: 1e-10
+    seed: 0
+    # clustering params
+    resolution: 0.6
+    method: 'gm'
+    n_neighbors: 100
+    metric: 'cosine'
+    k: 8
+    max_iter_clust: 20
+  # test the range of k=4 to k=8 clusters runs with layers=[50] and alpha=0.0
+  R14.0:
+    input_file: '/data1/shahs3/users/pourmalm/for_grafiti/spectrum_all.h5ad'
+    # grafiti params
+    layers: [50]
+    learning_rate: 0.1
+    gamma: 1.0
+    max_iter: 100
+    distance_thresh: 20
+    exponent: 1
+    distance_scale: 10
+    alpha: 0.0
+    threshold: 1e-10
+    seed: 0
+    # clustering params
+    resolution: 0.6
+    method: 'gm'
+    n_neighbors: 100
+    metric: 'cosine'
+    k: 4
+    max_iter_clust: 20
+  R14.1:
+    input_file: '/data1/shahs3/users/pourmalm/for_grafiti/spectrum_all.h5ad'
+    # grafiti params
+    layers: [50]
+    learning_rate: 0.1
+    gamma: 1.0
+    max_iter: 100
+    distance_thresh: 20
+    exponent: 1
+    distance_scale: 10
+    alpha: 0.0
+    threshold: 1e-10
+    seed: 0
+    # clustering params
+    resolution: 0.6
+    method: 'gm'
+    n_neighbors: 100
+    metric: 'cosine'
+    k: 5
+    max_iter_clust: 20
+  R14.2:
+    input_file: '/data1/shahs3/users/pourmalm/for_grafiti/spectrum_all.h5ad'
+    # grafiti params
+    layers: [50]
+    learning_rate: 0.1
+    gamma: 1.0
+    max_iter: 100
+    distance_thresh: 20
+    exponent: 1
+    distance_scale: 10
+    alpha: 0.0
+    threshold: 1e-10
+    seed: 0
+    # clustering params
+    resolution: 0.6
+    method: 'gm'
+    n_neighbors: 100
+    metric: 'cosine'
+    k: 6
+    max_iter_clust: 20
+  R14.3:
+    input_file: '/data1/shahs3/users/pourmalm/for_grafiti/spectrum_all.h5ad'
+    # grafiti params
+    layers: [50]
+    learning_rate: 0.1
+    gamma: 1.0
+    max_iter: 100
+    distance_thresh: 20
+    exponent: 1
+    distance_scale: 10
+    alpha: 0.0
+    threshold: 1e-10
+    seed: 0
+    # clustering params
+    resolution: 0.6
+    method: 'gm'
+    n_neighbors: 100
+    metric: 'cosine'
+    k: 7
+    max_iter_clust: 20
+  R14.4:
+    input_file: '/data1/shahs3/users/pourmalm/for_grafiti/spectrum_all.h5ad'
+    # grafiti params
+    layers: [50]
+    learning_rate: 0.1
+    gamma: 1.0
+    max_iter: 100
+    distance_thresh: 20
+    exponent: 1
+    distance_scale: 10
+    alpha: 0.0
+    threshold: 1e-10
+    seed: 0
+    # clustering params
+    resolution: 0.6
+    method: 'gm'
+    n_neighbors: 100
+    metric: 'cosine'
+    k: 8
+    max_iter_clust: 20
+  # test the range of k=4 to k=7 clusters runs with layers=[50] and alpha=0.1
+  R15.0:
+    input_file: '/data1/shahs3/users/pourmalm/for_grafiti/spectrum_all.h5ad'
+    # grafiti params
+    layers: [50]
+    learning_rate: 0.1
+    gamma: 1.0
+    max_iter: 100
+    distance_thresh: 20
+    exponent: 1
+    distance_scale: 10
+    alpha: 0.1
+    threshold: 1e-10
+    seed: 0
+    # clustering params
+    resolution: 0.6
+    method: 'gm'
+    n_neighbors: 100
+    metric: 'cosine'
+    k: 4
+    max_iter_clust: 20
+  R15.1:
+    input_file: '/data1/shahs3/users/pourmalm/for_grafiti/spectrum_all.h5ad'
+    # grafiti params
+    layers: [50]
+    learning_rate: 0.1
+    gamma: 1.0
+    max_iter: 100
+    distance_thresh: 20
+    exponent: 1
+    distance_scale: 10
+    alpha: 0.1
+    threshold: 1e-10
+    seed: 0
+    # clustering params
+    resolution: 0.6
+    method: 'gm'
+    n_neighbors: 100
+    metric: 'cosine'
+    k: 5
+    max_iter_clust: 20
+  R15.2:
+    input_file: '/data1/shahs3/users/pourmalm/for_grafiti/spectrum_all.h5ad'
+    # grafiti params
+    layers: [50]
+    learning_rate: 0.1
+    gamma: 1.0
+    max_iter: 100
+    distance_thresh: 20
+    exponent: 1
+    distance_scale: 10
+    alpha: 0.1
+    threshold: 1e-10
+    seed: 0
+    # clustering params
+    resolution: 0.6
+    method: 'gm'
+    n_neighbors: 100
+    metric: 'cosine'
+    k: 6
+    max_iter_clust: 20
+  R15.3:
+    input_file: '/data1/shahs3/users/pourmalm/for_grafiti/spectrum_all.h5ad'
+    # grafiti params
+    layers: [50]
+    learning_rate: 0.1
+    gamma: 1.0
+    max_iter: 100
+    distance_thresh: 20
+    exponent: 1
+    distance_scale: 10
+    alpha: 0.1
+    threshold: 1e-10
+    seed: 0
+    # clustering params
+    resolution: 0.6
+    method: 'gm'
+    n_neighbors: 100
+    metric: 'cosine'
+    k: 7
+    max_iter_clust: 20
+  # R16 is a repeat of R14 except using an input file which doesn't pass cell morphology features into the GAE
+  R16.0:
+    input_file: '/data1/shahs3/users/weinera2/grafiti/data/spectrum_all_no_cellmorph.h5ad'
+    # grafiti params
+    layers: [50]
+    learning_rate: 0.05
+    gamma: 1.0
+    max_iter: 100
+    distance_thresh: 20
+    exponent: 1
+    distance_scale: 10
+    alpha: 0.0
+    threshold: 1e-10
+    seed: 0
+    # clustering params
+    resolution: 0.6
+    method: 'gm'
+    n_neighbors: 100
+    metric: 'cosine'
+    k: 4
+    max_iter_clust: 20
+  R16.1:
+    input_file: '/data1/shahs3/users/weinera2/grafiti/data/spectrum_all_no_cellmorph.h5ad'
+    # grafiti params
+    layers: [50]
+    learning_rate: 0.05
+    gamma: 1.0
+    max_iter: 100
+    distance_thresh: 20
+    exponent: 1
+    distance_scale: 10
+    alpha: 0.0
+    threshold: 1e-10
+    seed: 0
+    # clustering params
+    resolution: 0.6
+    method: 'gm'
+    n_neighbors: 100
+    metric: 'cosine'
+    k: 5
+    max_iter_clust: 20
+  R16.2:
+    input_file: '/data1/shahs3/users/weinera2/grafiti/data/spectrum_all_no_cellmorph.h5ad'
+    # grafiti params
+    layers: [50]
+    learning_rate: 0.05
+    gamma: 1.0
+    max_iter: 100
+    distance_thresh: 20
+    exponent: 1
+    distance_scale: 10
+    alpha: 0.0
+    threshold: 1e-10
+    seed: 0
+    # clustering params
+    resolution: 0.6
+    method: 'gm'
+    n_neighbors: 100
+    metric: 'cosine'
+    k: 6
+    max_iter_clust: 20
+  R16.3:
+    input_file: '/data1/shahs3/users/weinera2/grafiti/data/spectrum_all_no_cellmorph.h5ad'
+    # grafiti params
+    layers: [50]
+    learning_rate: 0.05
+    gamma: 1.0
+    max_iter: 100
+    distance_thresh: 20
+    exponent: 1
+    distance_scale: 10
+    alpha: 0.0
+    threshold: 1e-10
+    seed: 0
+    # clustering params
+    resolution: 0.6
+    method: 'gm'
+    n_neighbors: 100
+    metric: 'cosine'
+    k: 7
+    max_iter_clust: 20
+  R16.4:
+    input_file: '/data1/shahs3/users/weinera2/grafiti/data/spectrum_all_no_cellmorph.h5ad'
+    # grafiti params
+    layers: [50]
+    learning_rate: 0.05
+    gamma: 1.0
+    max_iter: 100
+    distance_thresh: 20
+    exponent: 1
+    distance_scale: 10
+    alpha: 0.0
+    threshold: 1e-10
+    seed: 0
+    # clustering params
+    resolution: 0.6
+    method: 'gm'
+    n_neighbors: 100
+    metric: 'cosine'
+    k: 8
+    max_iter_clust: 20

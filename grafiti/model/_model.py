@@ -13,6 +13,9 @@ from torch_geometric.nn import GraphSAGE
 from torch_geometric.nn import aggr
 from torch_geometric.nn import MessagePassing
 from sklearn import preprocessing
+import random
+import scipy.sparse
+
 
 class GrafitiEncoderLayer(MessagePassing):
     def __init__(self, in_channels, out_channels):
@@ -84,10 +87,72 @@ class GrafitiDecoderModule(torch.nn.Module):
             x = conv(x, edge_index=edge_index, edge_attr=edge_attr).relu()
         return x
 
+class AvgReadout(nn.Module):
+    def __init__(self):
+        super(AvgReadout, self).__init__()
+    
+    def forward(self, h, mask):
+        if mask is None:
+            return torch.mean(h, 1)
+        else:
+            # mask = torch.unsqueeze(mask, -1)
+            return torch.sum(h * mask, 1) / torch.sum(mask)
+
+
+class Discriminator(nn.Module):
+    def __init__(self, n_hidden_layers, device):
+        super(Discriminator, self).__init__()
+        self.bilin = nn.Bilinear(n_hidden_layers, n_hidden_layers, 1).to(device)  # bilinear layer to compute similarity
+
+        for m in self.modules():
+            self.weight_init(m)
+    
+    def weight_init(self, m):
+        if isinstance(m, nn.Bilinear):
+            nn.init.xavier_uniform_(m.weight.data)
+            if m.bias is not None:
+                m.bias.data.fill_(0.0)  # initialize bias to zero
+    
+    def forward(self, s, h, h_a, s_bias1=None, s_bias2=None):
+        s_x = torch.unsqueeze(s, 1)  # add an extra dimension to s
+        s_x = s_x.expand_as(h)  # expand s to match the dimensions of h
+
+        sc_1 = self.bilin(h, s_x)  # compute similarity between h and s (positive samples)
+        sc_2 = self.bilin(h_a, s_x)  # compute similarity between h_a and s (negative samples)
+
+        if s_bias1 is not None:
+            sc_1 += s_bias1  # add bias to positive scores
+        if s_bias2 is not None:
+            sc_2 += s_bias2  # add bias to negative scores
+
+        logits = torch.cat([sc_1, sc_2], 1)  # concatenate positive and negative scores to form logits
+
+        return logits
+
+
+def augmented_features(x):
+    ''' Randomly permute the node features to create a corrupted version of the input graph. '''
+    perm = torch.randperm(x.size(0))
+    return x[perm]
+
+
+def seed_everything(seed=42):
+    random.seed(seed)
+    np.random.seed(seed)
+    torch.manual_seed(seed)
+    torch.cuda.manual_seed(seed)
+    torch.cuda.manual_seed_all(seed)  # if you are using multi-GPU.
+    torch.backends.cudnn.deterministic = True
+    torch.backends.cudnn.benchmark = False
+
+
 class GAE(object):
 
-    def __init__(self, adata, layers=[10,10], lr=0.00001, distance_threshold=None, exponent=2, distance_scale=None):
+    def __init__(self, adata, layers=[10,10], lr=0.00001, distance_threshold=None, exponent=2, distance_scale=None, gamma=1, seed=42, alpha=0, device='cpu'):
+        seed_everything(seed)
+        assert alpha >= 0 and alpha <= 1  # alpha must be in the range [0,1]
         self.lr = lr
+        self.device = torch.device(device)
         print("Generating PyTorch Geometric Dataset...")
         if distance_threshold != None:
             distances = adata.obsp["spatial_distances"]
@@ -98,9 +163,16 @@ class GAE(object):
                     connectiv[row, col] = 0
             adata.obsp["spatial_connectivities"] = connectiv
         edges = adata.obsp["spatial_connectivities"].nonzero()
-        x = torch.from_numpy(adata.X)
-        x = x.float()
-        e = torch.from_numpy(np.array(edges)).type(torch.int64)
+        
+        # check if adata.X is sparse
+        if scipy.sparse.issparse(adata.X):
+            x = torch.from_numpy(adata.X.toarray())
+        else:
+            x = torch.from_numpy(adata.X)
+        
+        x = x.float().to(self.device)
+        e = torch.from_numpy(np.array(edges)).type(torch.int64).to(self.device)
+
         attrs = [adata.obsp["spatial_distances"][x,y] for x,y in zip(*edges)]
         if distance_scale!=None:
             scaler = preprocessing.MinMaxScaler(feature_range=(0,distance_scale))
@@ -111,36 +183,88 @@ class GAE(object):
             attrs = np.array(attrs)
         data = Data(x=x, edge_index=e, edge_attr=attrs)
         self.adata = adata
-        data.edge_attr = torch.from_numpy(data.edge_attr)
+        data.edge_attr = torch.from_numpy(data.edge_attr).to(self.device)
         self.encoder_layers = layers
         self.decoder_layers = list(reversed(layers[1:])) + [data.num_features]
         print("Setting up Model...")
-        self.encoder = GrafitiEncoderModule(data.num_features,layers=self.encoder_layers, )
-        self.decoder = GrafitiDecoderModule(layers[-1],layers=self.decoder_layers)
-        self.gae = models.GAE(encoder=self.encoder,decoder=self.decoder)
+        self.encoder = GrafitiEncoderModule(data.num_features,layers=self.encoder_layers).to(self.device)
+        self.decoder = GrafitiDecoderModule(layers[-1],layers=self.decoder_layers).to(self.device)
+        self.gae = models.GAE(encoder=self.encoder,decoder=self.decoder).to(self.device)
         self.optimizer = torch.optim.Adadelta(self.gae.parameters(), lr=lr)
-        self.loss = nn.MSELoss()
+        self.scheduler = torch.optim.lr_scheduler.ExponentialLR(self.optimizer,gamma)
+        self.contrastive_loss = nn.BCEWithLogitsLoss()        
+        self.reconstruction_loss = nn.MSELoss()
         self.losses = []
         self.global_epoch = 0
         self.data = data
+        self.read = AvgReadout()
+        self.sigm = nn.Sigmoid()
+        self.disc = Discriminator(layers[-1], self.device)
+        self.gamma = gamma  # parameter for learning rate scheduler
+        self.alpha = alpha  # parameter for the importance of contrastive loss
         print("Ready to train!")
 
-    def train(self, epochs, update_interval=5, threshold=0):
-        prev_loss = 0.
+    def train(self, epochs, update_interval=5, threshold=0.001, patience=10):
+        best_loss = np.inf
+        patience_counter = 0 # Counter to track the number of epochs without improvement
         for i in range(epochs):
-            self.optimizer.zero_grad()  
-            z = self.gae.encode(self.data.x, self.data.edge_index, self.data.edge_attr)
-            reconstruction = self.gae.decode(z, self.data.edge_index, self.data.edge_attr)
-            loss = self.loss(reconstruction, self.data.x)
+            self.optimizer.zero_grad()
+
+            # only use reconstruction loss if alpha is 0
+            if self.alpha == 0:
+                if i == 0:
+                    print('Training with reconstruction loss only...')
+                z = self.gae.encode(self.data.x, self.data.edge_index, self.data.edge_attr)
+                reconstruction = self.gae.decode(z, self.data.edge_index, self.data.edge_attr)
+                loss = self.reconstruction_loss(reconstruction, self.data.x)
+            else:
+                if i == 0:
+                    print('Training with reconstruction and contrastive loss...')
+                # prepare the augmented data
+                x_a = augmented_features(self.data.x)
+                self.data.x_a = x_a
+
+                # encode the original and augmented data into latent space
+                h = self.gae.encode(self.data.x, self.data.edge_index, self.data.edge_attr)
+                h_a = self.gae.encode(self.data.x_a, self.data.edge_index, self.data.edge_attr)
+
+                # summarize the latent embeddings of the original graph to capture the global structure
+                s = self.read(h, None)
+                s = self.sigm(s).to(self.device)  # normalize to [0,1] probabilities
+
+                # construct logits (raw scores that represent the similarity between node embeddings and the summary vector)
+                logits = self.disc(s, h, h_a)
+
+                # contrastive loss
+                labels = torch.cat([torch.ones(logits.shape[0], 1), torch.zeros(logits.shape[0], 1)], dim=1).to(logits.device)
+                contrastive_loss = self.contrastive_loss(logits, labels)
+
+                # reconstruction loss
+                reconstruction = self.gae.decode(h, self.data.edge_index, self.data.edge_attr)
+                reconstruction_loss = self.reconstruction_loss(reconstruction, self.data.x)
+
+                # total loss is computed as a weighted sum of the contrastive and reconstruction losses
+                loss = self.alpha * contrastive_loss + (1 - self.alpha) * reconstruction_loss
+
+
             loss.backward()
-            self.optimizer.step() 
+            self.optimizer.step()
+            self.scheduler.step()  # step the learning rate scheduler
             self.losses.append(loss.item())
             if i % update_interval == 0:
                 print("Epoch {} ** iteration {} ** Loss: {}".format(self.global_epoch, i, np.mean(self.losses[-update_interval:])))
             self.global_epoch += 1
             curr_loss = loss.item()
-            if abs(curr_loss - prev_loss) < threshold:
-                print("Minimum threhsold!")
+            # Check for improvement
+            if curr_loss < best_loss - threshold:
+                best_loss = curr_loss
+                patience_counter = 0  # Reset the counter if there is an improvement
+            else:
+                patience_counter += 1
+
+            # Early stopping condition
+            if patience_counter >= patience:
+                print("Early stopping due to no improvement over {} epochs.".format(patience))
                 break
         print("Complete.")
 
@@ -164,5 +288,5 @@ class GAE(object):
     def load_embedding(self, adata, encoding_key="X_grafiti"):
         with torch.no_grad():
             z = self.gae.encode(self.data.x, self.data.edge_index, self.data.edge_attr)
-            zcpu = z.detach().numpy()
+            zcpu = z.detach().cpu().numpy()
             adata.obsm[encoding_key] = zcpu
